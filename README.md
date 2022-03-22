@@ -4,6 +4,7 @@ Aplikacja desktopowa do przeprowadzania quizów w Kivy, gdzie bazę danych będz
 - wybór jednej z odpowiedzi (A, B, C, D)
 - układanie kafelków
 - ręczne wpisanie odpowiedzi
+
 Gracz może rozpocząć rozgrywkę przez wybór jednego z prywatnych lub udostępnionych publicznie quizów. W trakcie rozgrywki prowadzony będzie ranking graczy, na podstawie poprawności i szybkości udzielanych odpowiedzi. Po zakończonej grze osoby z najwyższymi wynikami będą odpowiednio graficznie wyróżnione.
 
 Autorzy:
