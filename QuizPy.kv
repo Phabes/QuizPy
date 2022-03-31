@@ -1,0 +1,135 @@
+#:kivy 1.0.9
+
+<Category>:
+    size_hint: 1, None
+    height: 400
+    on_press: root.click()
+
+<Quiz>:
+    size_hint: 1, None
+    height: 400
+    on_press: root.click()
+
+<StartScreen>
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: 1,None
+            height: 80
+            AnchorLayout:
+                anchor_x: "left"
+                size_hint: 0.5,1
+                Button:
+                    id: back_button
+                    text: "BACK"
+                    size_hint: 0.5,1
+            AnchorLayout:
+                anchor_x: "right"
+                size_hint: 0.5,1
+                BoxLayout:
+                    orientation: "horizontal"
+                    size_hint: 0.5,1
+                    Button:
+                        text: "LOGIN"
+                        size_hint: 0.5,1
+                        on_press: root.manager.current = "login"
+                    Button:
+                        text: "REGISTER"
+                        size_hint: 0.5,1
+                        on_press: root.manager.current = "register"
+        ScrollView:
+            size_hint: 1,None
+            height: root.height - 80
+            GridLayout:
+                id: categoriesGrid
+                cols: 2
+                size_hint: 1, None
+                height: self.minimum_height
+
+<RegisterScreen>
+    Button:
+        text: "BACK"
+        on_press: root.manager.current = "start"
+
+<LoginScreen>
+    Button:
+        text: "BACK"
+        on_press: root.manager.current = "start"
+
+<QuizScreen>
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: 1,None
+            height: 80
+            AnchorLayout:
+                anchor_x: "left"
+                size_hint: 0.5,1
+                Button:
+                    id: back_button
+                    text: "BACK"
+                    size_hint: 0.5,1
+            AnchorLayout:
+                anchor_x: "right"
+                size_hint: 0.5,1
+                BoxLayout:
+                    orientation: "horizontal"
+                    size_hint: 0.5,1
+                    Button:
+                        text: "LOGIN"
+                        size_hint: 0.5,1
+                        on_press: root.manager.current = "login"
+                    Button:
+                        text: "REGISTER"
+                        size_hint: 0.5,1
+                        on_press: root.manager.current = "register"
+        ScrollView:
+            size_hint: 1,None
+            height: root.height - 80
+            GridLayout:
+                id: questions
+                cols: 2
+                size_hint: 1, None
+                height: self.minimum_height
+
+<CategoryScreen>
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: 1,None
+            height: 80
+            AnchorLayout:
+                anchor_x: "left"
+                size_hint: 0.5,1
+                Button:
+                    id: back_button
+                    text: "BACK"
+                    size_hint: 0.5,1
+            AnchorLayout:
+                anchor_x: "right"
+                size_hint: 0.5,1
+                BoxLayout:
+                    orientation: "horizontal"
+                    size_hint: 0.5,1
+                    Button:
+                        text: "LOGIN"
+                        size_hint: 0.5,1
+                        on_press: root.manager.current = "login"
+                    Button:
+                        text: "REGISTER"
+                        size_hint: 0.5,1
+                        on_press: root.manager.current = "register"
+        ScrollView:
+            size_hint: 1,None
+            height: root.height - 80
+            GridLayout:
+                id: quiz_grid
+                cols: 2
+                size_hint: 1, None
+                height: self.minimum_height
