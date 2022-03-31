@@ -37,10 +37,14 @@ class Quiz(Button):
         sm.current = "quiz"
         sm.current_screen.ids.back_button.bind(on_press=self.back_click)
         sm.current_screen.ids.questions.clear_widgets()
-        sm.current_screen.ids.questions.add_widget(Button(text="PLAY", size_hint=(1, None), height=400))
+        sm.current_screen.ids.questions.add_widget(Button(text="PLAY", size_hint=(1, None), height=400,
+                                                   on_press=self.start_quiz))
 
     def back_click(self, button):
         sm.current = "category"
+
+    def start_quiz(self, button):
+        sm.current = "question"
 
 
 class StartScreen(Screen):
@@ -65,6 +69,10 @@ class QuizScreen(Screen):
         super().__init__(**kwargs)
 
 
+class QuestionScreen(Screen):
+    pass
+
+
 class LoginScreen(Screen):
     pass
 
@@ -83,6 +91,7 @@ class QuizPyApp(App):
         sm.add_widget(RegisterScreen(name="register"))
         sm.add_widget(CategoryScreen(name="category"))
         sm.add_widget(QuizScreen(name="quiz"))
+        sm.add_widget(QuestionScreen(name="question"))
         return sm
         # return QuizPyGame()
 
