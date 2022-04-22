@@ -145,6 +145,7 @@
                         size_hint: 0.5,1
                         on_press: root.manager.current = "register"
         ScrollView:
+            scroll_wheel_distance: 100
             size_hint: 1,None
             height: root.height - 80
             GridLayout:
@@ -183,6 +184,7 @@
                         size_hint: 0.5,1
                         on_press: root.manager.current = "register"
         ScrollView:
+            scroll_wheel_distance: 100
             size_hint: 1,None
             height: root.height - 80
             GridLayout:
@@ -221,6 +223,7 @@
                         size_hint: 0.5,1
                         on_press: root.manager.current = "register"
         ScrollView:
+            scroll_wheel_distance: 100
             size_hint: 1,None
             height: root.height - 80
             GridLayout:
@@ -327,12 +330,86 @@
                 on_press:root.choose_answer(3)
                 background_color:"#00ff00" if root.isCorrect==3 else ( "#ff0000" if root.isCorrect>=0 else "#AAAAAA" )
                 text: "[Error]"
+
 <LoginScreen>
-    Button:
-        text: "BACK"
-        on_press: root.manager.current = "start"
+    BoxLayout:
+        AnchorLayout:
+            anchor_x: "center"
+            anchor_y: "center"
+            BoxLayout:
+                size_hint: 0.8, 0.8
+                size: root.width*0.8, root.height*0.8
+                GridLayout:
+                    rows: 3
+                    cols: 1
+                    size_hint: 1, 1
+                    TextInput:
+                        id: login_input
+                        hint_text: "login"
+                        size_hint: 1, None
+                        height: 40
+                        font_size: 20
+                        focus: True
+                    TextInput
+                        id: password_input
+                        hint_text: "password"
+                        password: True
+                        size_hint: 1, None
+                        height: 40
+                        font_size: 20
+                    Button:
+                        id: login_button
+                        text: "LOGIN"
+                        size_hint: 0.5, None
+                        height: 50
+                        pos_hint: {"center_x": 0.5}
+                        on_press: root.login_button_click()
+#            Button:
+#                text: "BACK"
+#                size_hint: 0.5, 0.5
+#                on_press: root.manager.current = "start"
 
 <RegisterScreen>
-    Button:
-        text: "BACK"
-        on_press: root.manager.current = "start"
+    BoxLayout:
+        AnchorLayout:
+            anchor_x: "center"
+            anchor_y: "center"
+            BoxLayout:
+                size_hint: 0.8, 0.8
+                size: root.width*0.8, root.height*0.8
+                GridLayout:
+                    rows: 4
+                    cols: 1
+                    size_hint: 1, 1
+                    TextInput:
+                        id: login_input
+                        hint_text: "login"
+                        size_hint: 1, None
+                        height: 40
+                        font_size: 20
+                        focus: True
+                    TextInput
+                        id: password_input
+                        hint_text: "password"
+                        password: True
+                        size_hint: 1, None
+                        height: 40
+                        font_size: 20
+                    TextInput
+                        id: confirm_password_input
+                        hint_text: "password"
+                        password: True
+                        size_hint: 1, None
+                        height: 40
+                        font_size: 20
+                    Button:
+                        id: login_button
+                        text: "REGISTER"
+                        size_hint: 0.5, None
+                        height: 50
+                        pos_hint: {"center_x": 0.5}
+                        on_press: root.register_button_click()
+#            Button:
+#                text: "BACK"
+#                size_hint: 0.5, 0.5
+#                on_press: root.manager.current = "start"
