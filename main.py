@@ -73,13 +73,12 @@ class ChooseOneQuestion(Widget):
 
 class QuizPyApp(App):
     def build(self):
-        # sm.add_widget(RegisterScreen(connection, name="register"))
-        sm.add_widget(LoginScreen(connection, name="login"))
+        sm.add_widget(LoginScreen(sm, connection, name="login"))
+        sm.add_widget(RegisterScreen(sm, connection, name="register"))
         sm.add_widget(StartScreen(sm, connection, name="start"))
-        # sm.add_widget(RegisterScreen(name="register"))
-        # sm.add_widget(CategoryScreen(name="category"))
-        # sm.add_widget(QuizScreen(name="quiz"))
-        # sm.add_widget(QuestionScreen(name="question"))
+        sm.add_widget(CategoryScreen(name="category"))
+        sm.add_widget(QuizScreen(name="quiz"))
+        sm.add_widget(QuestionScreen(name="question"))
         return sm
 
 
