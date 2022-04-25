@@ -13,3 +13,7 @@ class StartScreen(Screen):
             self.ids.categoriesGrid.add_widget(Category(self.sm, self.connection,text=category["name"]))
         for category in categories:
             self.ids.categoriesGrid.add_widget(Category(self.sm, self.connection,text=category["name"]))
+
+    def logout_user(self):
+        if self.connection.logout_user():
+            self.sm.current = "login"

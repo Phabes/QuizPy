@@ -1,4 +1,5 @@
 from kivy.uix.screenmanager import Screen
+
 from database_management import Connection
 
 
@@ -17,6 +18,9 @@ class LoginScreen(Screen):
             logged = self.connection.login_user(login, password)
             if logged:
                 print("SUCCESS")
+                self.ids.login_input.text = ""
+                self.ids.password_input.text = ""
                 self.sm.current = "start"
+                self.sm.change_user_label(self.manager.get_screen("start").ids.user_hello)
             else:
                 print("ERROR")

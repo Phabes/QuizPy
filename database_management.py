@@ -3,7 +3,8 @@ import bcrypt
 
 from ConnectionString import path
 
-class Connection():
+
+class Connection:
     def __init__(self):
         self.db = self.create_connection()
         self.user = None
@@ -44,3 +45,7 @@ class Connection():
             self.user = username
             return True
         return False
+
+    def logout_user(self):
+        self.user = None
+        return True

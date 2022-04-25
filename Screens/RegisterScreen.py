@@ -18,6 +18,9 @@ class RegisterScreen(Screen):
                 print("user doesnt exist")
                 created = self.connection.create_user(login, password)
                 if created:
+                    self.ids.login_input.text = ""
+                    self.ids.password_input.text = ""
+                    self.ids.confirm_password_input.text = ""
                     self.sm.current = "start"
             else:
                 print("user exists")

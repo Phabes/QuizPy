@@ -1,19 +1,21 @@
+from kivy.uix.label import Label
 from kivy.uix.widget import Widget
 from kivy.app import App
-from kivy.uix.screenmanager import ScreenManager, Screen
+# from kivy.uix.screenmanager import ScreenManager
 from Screens.StartScreen import StartScreen
 from Screens.CategoryScreen import CategoryScreen
 from Screens.QuizScreen import QuizScreen
 from Screens.QuestionScreen import QuestionScreen
 from Screens.LoginScreen import LoginScreen
 from Screens.RegisterScreen import RegisterScreen
+from Manager import Manager
 from database_management import Connection
 from kivy.properties import (
     NumericProperty, ObjectProperty, StringProperty
 )
 
 connection = Connection()
-sm = ScreenManager()
+sm = Manager(connection)
 
 
 class ChooseOneQuestion(Widget):

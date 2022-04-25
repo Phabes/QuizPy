@@ -105,6 +105,36 @@
 #                opacity: 1 if self.visible else 0
 #                disabled: not self.visible
 
+#OLD NAVBAR
+#    BoxLayout:
+#        orientation: "vertical"
+#        size: root.width, root.height
+#        BoxLayout:
+#            orientation: "horizontal"
+#            size_hint: 1,None
+#            height: 80
+#            AnchorLayout:
+#                anchor_x: "left"
+#                size_hint: 0.5,1
+#                Button:
+#                    id: back_button
+#                    text: "BACK"
+#                    size_hint: 0.5,1
+#            AnchorLayout:
+#                anchor_x: "right"
+#                size_hint: 0.5,1
+#                BoxLayout:
+#                    orientation: "horizontal"
+#                    size_hint: 0.5,1
+#                    Button:
+#                        text: "LOGIN"
+#                        size_hint: 0.5,1
+#                        on_press: root.manager.current = "login"
+#                    Button:
+#                        text: "REGISTER"
+#                        size_hint: 0.5,1
+#                        on_press: root.manager.current = "register"
+
 <Category>:
     size_hint: 1, None
     height: 400
@@ -126,9 +156,8 @@
             AnchorLayout:
                 anchor_x: "left"
                 size_hint: 0.5,1
-                Button:
-                    id: back_button
-                    text: "BACK"
+                Label:
+                    id: user_hello
                     size_hint: 0.5,1
             AnchorLayout:
                 anchor_x: "right"
@@ -137,13 +166,10 @@
                     orientation: "horizontal"
                     size_hint: 0.5,1
                     Button:
-                        text: "LOGIN"
-                        size_hint: 0.5,1
-                        on_press: root.manager.current = "login"
-                    Button:
-                        text: "REGISTER"
-                        size_hint: 0.5,1
-                        on_press: root.manager.current = "register"
+                        text: "LOGOUT"
+                        size_hint: 0.5, 0.8
+                        pos_hint: {"center_y": 0.5}
+                        on_press: root.logout_user()
         ScrollView:
             scroll_wheel_distance: 100
             size_hint: 1,None
@@ -350,6 +376,7 @@
                         height: 40
                         font_size: 20
                         focus: True
+                        multiline: False
                     TextInput
                         id: password_input
                         hint_text: "password"
@@ -357,6 +384,7 @@
                         size_hint: 1, None
                         height: 40
                         font_size: 20
+                        multiline: False
                     Button:
                         id: login_button
                         text: "LOGIN"
@@ -396,6 +424,7 @@
                         height: 40
                         font_size: 20
                         focus: True
+                        multiline: False
                     TextInput
                         id: password_input
                         hint_text: "password"
@@ -403,6 +432,7 @@
                         size_hint: 1, None
                         height: 40
                         font_size: 20
+                        multiline: False
                     TextInput
                         id: confirm_password_input
                         hint_text: "password"
@@ -410,6 +440,7 @@
                         size_hint: 1, None
                         height: 40
                         font_size: 20
+                        multiline: False
                     Button:
                         id: login_button
                         text: "REGISTER"
