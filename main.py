@@ -1,4 +1,3 @@
-from kivy.uix.label import Label
 from kivy.uix.widget import Widget
 from kivy.app import App
 # from kivy.uix.screenmanager import ScreenManager
@@ -8,10 +7,11 @@ from Screens.QuizScreen import QuizScreen
 from Screens.QuestionScreen import QuestionScreen
 from Screens.LoginScreen import LoginScreen
 from Screens.RegisterScreen import RegisterScreen
-from Manager import Manager
+from Screens.CreateScreen import CreateScreen
+from Screens.Manager import Manager
 from database_management import Connection
 from kivy.properties import (
-    NumericProperty, ObjectProperty, StringProperty
+    NumericProperty, ObjectProperty
 )
 
 connection = Connection()
@@ -81,6 +81,7 @@ class QuizPyApp(App):
         sm.add_widget(CategoryScreen(name="category"))
         sm.add_widget(QuizScreen(name="quiz"))
         sm.add_widget(QuestionScreen(name="question"))
+        sm.add_widget(CreateScreen(sm, connection ,name="create"))
         return sm
 
 

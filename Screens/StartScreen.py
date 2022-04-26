@@ -14,6 +14,10 @@ class StartScreen(Screen):
         for category in categories:
             self.ids.categoriesGrid.add_widget(Category(self.sm, self.connection,text=category["name"]))
 
+    def create_quiz(self):
+        self.sm.current = "create"
+        self.sm.current_screen.get_all_categories()
+
     def logout_user(self):
         if self.connection.logout_user():
             self.sm.current = "login"

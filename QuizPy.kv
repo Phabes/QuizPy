@@ -140,10 +140,55 @@
     height: 400
     on_press: root.click()
 
+<CreateCategory>:
+    size_hint: 1, None
+    height: 400
+    on_press: root.click()
+
 <Quiz>:
     size_hint: 1, None
     height: 400
     on_press: root.click()
+
+<CreateScreen>
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: 1,None
+            height: 80
+            AnchorLayout:
+                anchor_x: "left"
+                size_hint: 0.5,1
+                Label:
+                    size_hint: 0.5,1
+                    text: "CREATING NEW QUIZ"
+            AnchorLayout:
+                anchor_x: "right"
+                size_hint: 0.5,1
+                BoxLayout:
+                    orientation: "horizontal"
+                    size_hint: 0.5,1
+                    Button:
+                        text: "CANCEL"
+                        size_hint: 0.5, 0.8
+                        pos_hint: {"center_y": 0.5}
+                        on_press: root.cancel_creating()
+        Label:
+            id: message_to_user
+            size_hint: 1, None
+            height: 80
+        ScrollView:
+            id: scroll_view
+            scroll_wheel_distance: 100
+            size_hint: 1,None
+            height: root.height - 160
+            GridLayout:
+                id: optionsGrid
+                cols: 2
+                size_hint: 1, None
+                height: self.minimum_height
 
 <StartScreen>
     BoxLayout:
@@ -165,6 +210,11 @@
                 BoxLayout:
                     orientation: "horizontal"
                     size_hint: 0.5,1
+                    Button:
+                        text: "CREATE QUIZ"
+                        size_hint: 0.5, 0.8
+                        pos_hint: {"center_y": 0.5}
+                        on_press: root.create_quiz()
                     Button:
                         text: "LOGOUT"
                         size_hint: 0.5, 0.8
