@@ -3,3 +3,4 @@ class Question:
         self.question = None
         self.type = None
         self.answers = []
+        self.correct = None

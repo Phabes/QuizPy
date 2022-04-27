@@ -1,5 +1,6 @@
 from kivy.uix.button import Button
 
+
 class Quiz(Button):
     def __init__(self, sm, quiz, **kwargs):
         super().__init__(**kwargs)
@@ -13,7 +14,7 @@ class Quiz(Button):
         self.sm.current_screen.ids.back_button.bind(on_press=self.back_click)
         self.sm.current_screen.ids.questions.clear_widgets()
         self.sm.current_screen.ids.questions.add_widget(Button(text="PLAY", size_hint=(1, None), height=400,
-                                                          on_press=self.start_quiz))
+                                                               on_press=self.start_quiz))
 
     def back_click(self, button):
         self.sm.transition.direction = "right"

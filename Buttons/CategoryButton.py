@@ -1,6 +1,7 @@
 from kivy.uix.button import Button
 from Buttons.QuizButton import Quiz
 
+
 class Category(Button):
     def __init__(self, sm, connection, **kwargs):
         super().__init__(**kwargs)

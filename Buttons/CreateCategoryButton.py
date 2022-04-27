@@ -12,5 +12,5 @@ class CreateCategory(Button):
     def click(self):
         if self.create_screen.stage == 1:
             self.create_screen.set_category(self.name)
-        elif self.create_screen.stage == 2:
+        elif self.create_screen.stage == 3:
             self.create_screen.set_next_question_type(self.name)
