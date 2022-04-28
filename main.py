@@ -1,6 +1,5 @@
 from kivy.uix.widget import Widget
 from kivy.app import App
-# from kivy.uix.screenmanager import ScreenManager
 from Screens.StartScreen import StartScreen
 from Screens.CategoryScreen import CategoryScreen
 from Screens.QuizScreen import QuizScreen
@@ -10,7 +9,7 @@ from Screens.LoginScreen import LoginScreen
 from Screens.RegisterScreen import RegisterScreen
 from Screens.CreateScreen import CreateScreen
 from Screens.Manager import Manager
-from database_management import Connection
+from DatabaseManagement import Connection
 from kivy.properties import (
     NumericProperty, ObjectProperty
 )
@@ -24,7 +23,7 @@ class QuizPyApp(App):
     def build(self):
         sm.add_widget(LoginScreen(sm, connection, name="login"))
         sm.add_widget(RegisterScreen(sm, connection, name="register"))
-        sm.add_widget(StartScreen(sm, connection, name="start"))
+        sm.add_widget(StartScreen(sm, connection, name="start")
         sm.add_widget(CategoryScreen(name="category"))
         sm.add_widget(QuizScreen(name="quiz"))
         sm.add_widget(ChooseOneScreen(sm,name="chooseOne"))

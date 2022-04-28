@@ -135,7 +135,7 @@
 #                        size_hint: 0.5,1
 #                        on_press: root.manager.current = "register"
 
-<Category>:
+<CategoryButton>:
     size_hint: 1, None
     height: 400
     on_press: root.click()
@@ -145,7 +145,7 @@
     height: 400
     on_press: root.click()
 
-<Quiz>:
+<QuizButton>:
     size_hint: 1, None
     height: 400
     on_press: root.click()
@@ -181,9 +181,9 @@
             height: 80
         ScrollView:
             id: scroll_view
-            scroll_wheel_distance: 100
-            size_hint: 1,None
+            size_hint: 1, None
             height: root.height - 160
+            scroll_wheel_distance: 80
             GridLayout:
                 id: optionsGrid
                 cols: 2
@@ -203,7 +203,7 @@
                 size_hint: 0.5,1
                 Label:
                     id: user_hello
-                    size_hint: 0.5,1
+                    size_hint: 0.5, 1
             AnchorLayout:
                 anchor_x: "right"
                 size_hint: 0.5,1
@@ -214,16 +214,16 @@
                         text: "CREATE QUIZ"
                         size_hint: 0.5, 0.8
                         pos_hint: {"center_y": 0.5}
-                        on_press: root.create_quiz()
+                        on_press: root.manager.create_quiz()
                     Button:
                         text: "LOGOUT"
                         size_hint: 0.5, 0.8
                         pos_hint: {"center_y": 0.5}
-                        on_press: root.logout_user()
+                        on_press: root.manager.logout_user()
         ScrollView:
-            scroll_wheel_distance: 100
             size_hint: 1,None
             height: root.height - 80
+            scroll_wheel_distance: 80
             GridLayout:
                 id: categoriesGrid
                 cols: 2
@@ -240,29 +240,40 @@
             height: 80
             AnchorLayout:
                 anchor_x: "left"
-                size_hint: 0.5,1
-                Button:
-                    id: back_button
-                    text: "BACK"
-                    size_hint: 0.5,1
+                size_hint: 0.5, 1
+                BoxLayout:
+                    size_hint: 1, 1
+                    Button:
+                        id: back_button
+                        text: "BACK"
+                        size_hint: 0.5, 0.8
+                        pos_hint: {"center_y": 0.5}
+                    BoxLayout:
+                        size_hint: 0.5, 0.8
+                        pos_hint: {"center_y": 0.5}
+                        Label:
+                            id: user_hello
+                            size_hint: 1, 1
             AnchorLayout:
                 anchor_x: "right"
-                size_hint: 0.5,1
+                size_hint: 0.5, 1
                 BoxLayout:
                     orientation: "horizontal"
                     size_hint: 0.5,1
                     Button:
-                        text: "LOGIN"
-                        size_hint: 0.5,1
-                        on_press: root.manager.current = "login"
+                        text: "CREATE QUIZ"
+                        size_hint: 0.5, 0.8
+                        pos_hint: {"center_y": 0.5}
+                        on_press: root.manager.create_quiz()
                     Button:
-                        text: "REGISTER"
-                        size_hint: 0.5,1
-                        on_press: root.manager.current = "register"
+                        text: "LOGOUT"
+                        size_hint: 0.5, 0.8
+                        pos_hint: {"center_y": 0.5}
+                        on_press: root.manager.logout_user()
         ScrollView:
-            scroll_wheel_distance: 100
             size_hint: 1,None
             height: root.height - 80
+            scroll_wheel_distance: 80
             GridLayout:
                 id: quiz_grid
                 cols: 2
@@ -275,15 +286,24 @@
         size: root.width, root.height
         BoxLayout:
             orientation: "horizontal"
-            size_hint: 1,None
+            size_hint: 1, None
             height: 80
             AnchorLayout:
                 anchor_x: "left"
-                size_hint: 0.5,1
-                Button:
-                    id: back_button
-                    text: "BACK"
-                    size_hint: 0.5,1
+                size_hint: 0.5, 1
+                BoxLayout:
+                    size_hint: 1, 1
+                    Button:
+                        id: back_button
+                        text: "BACK"
+                        size_hint: 0.5, 0.8
+                        pos_hint: {"center_y": 0.5}
+                    BoxLayout:
+                        size_hint: 0.5, 0.8
+                        pos_hint: {"center_y": 0.5}
+                        Label:
+                            id: user_hello
+                            size_hint: 1, 1
             AnchorLayout:
                 anchor_x: "right"
                 size_hint: 0.5,1
@@ -291,22 +311,21 @@
                     orientation: "horizontal"
                     size_hint: 0.5,1
                     Button:
-                        text: "LOGIN"
-                        size_hint: 0.5,1
-                        on_press: root.manager.current = "login"
+                        text: "CREATE QUIZ"
+                        size_hint: 0.5, 0.8
+                        pos_hint: {"center_y": 0.5}
+                        on_press: root.manager.create_quiz()
                     Button:
-                        text: "REGISTER"
-                        size_hint: 0.5,1
-                        on_press: root.manager.current = "register"
-        ScrollView:
-            scroll_wheel_distance: 100
-            size_hint: 1,None
+                        text: "LOGOUT"
+                        size_hint: 0.5, 0.8
+                        pos_hint: {"center_y": 0.5}
+                        on_press: root.manager.logout_user()
+        AnchorLayout:
+            id: questions
+            size_hint: 1, None
             height: root.height - 80
-            GridLayout:
-                id: questions
-                cols: 2
-                size_hint: 1, None
-                height: self.minimum_height
+            anchor_y: "center"
+            anchor_x: "center"
 
 <CorrectOrderScreen>
     BoxLayout:
@@ -321,11 +340,21 @@
             height: 80
             AnchorLayout:
                 anchor_x: "left"
-                size_hint: 0.5,1
-                Button:
-                    id: back_button
-                    text: "QUIT"
-                    size_hint: 0.5,1
+
+                size_hint: 0.5, 1
+                BoxLayout:
+                    size_hint: 1, 1
+                    Button:
+                        id: back_button
+                        text: "QUIT"
+                        size_hint: 0.5, 0.8
+                        pos_hint: {"center_y": 0.5}
+                    BoxLayout:
+                        size_hint: 0.5, 0.8
+                        pos_hint: {"center_y": 0.5}
+                        Label:
+                            id: user_hello
+                            size_hint: 1, 1
             AnchorLayout:
                 anchor_x: "right"
                 size_hint: 0.5,1
@@ -509,6 +538,7 @@
                     id: back_button
                     text: "Quit"
                     size_hint: 0.5,1
+
             AnchorLayout:
                 anchor_x: "right"
                 size_hint: 0.5,1
@@ -516,13 +546,15 @@
                     orientation: "horizontal"
                     size_hint: 0.5,1
                     Button:
-                        text: "LOGIN"
-                        size_hint: 0.5,1
-                        on_press: root.manager.current = "login"
+                        text: "CREATE QUIZ"
+                        size_hint: 0.5, 0.8
+                        pos_hint: {"center_y": 0.5}
+                        on_press: root.manager.create_quiz()
                     Button:
-                        text: "REGISTER"
-                        size_hint: 0.5,1
-                        on_press: root.manager.current = "register"
+                        text: "LOGOUT"
+                        size_hint: 0.5, 0.8
+                        pos_hint: {"center_y": 0.5}
+                        on_press: root.manager.logout_user()
         BoxLayout:
             orientation:'vertical'
             size:(root.width,root.height)
@@ -638,10 +670,6 @@
                         height: 50
                         pos_hint: {"center_x": 0.5}
                         on_press: root.manager.current = "register"
-#            Button:
-#                text: "BACK"
-#                size_hint: 0.5, 0.5
-#                on_press: root.manager.current = "start"
 
 <RegisterScreen>
     BoxLayout:
@@ -694,7 +722,3 @@
                         height: 50
                         pos_hint: {"center_x": 0.5}
                         on_press: root.manager.current = "login"
-#            Button:
-#                text: "BACK"
-#                size_hint: 0.5, 0.5
-#                on_press: root.manager.current = "start"
