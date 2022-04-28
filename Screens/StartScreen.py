@@ -9,6 +9,7 @@ class StartScreen(Screen):
         self.connection = connection
         self.refresh()
 
+
     def refresh(self):
         self.ids.categoriesGrid.clear_widgets()
         categories = self.connection.find_categories()
