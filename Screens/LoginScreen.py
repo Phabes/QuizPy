@@ -1,18 +1,13 @@
-import time
-
 from kivy.uix.screenmanager import Screen
-
-from database_management import Connection
 
 
 class LoginScreen(Screen):
-    def __init__(self, sm, connection: Connection, **kw):
+    def __init__(self, sm, connection, **kw):
         super().__init__(**kw)
         self.sm = sm
         self.connection = connection
         self.l = "qwe"
         self.p = "qwe"
-
 
     def login_button_click(self):
         # login = self.ids.login_input.text
@@ -24,10 +19,10 @@ class LoginScreen(Screen):
         else:
             logged = self.connection.login_user(login, password)
             if logged:
-                print("SUCCESS")
+                # print("SUCCESS")
                 self.ids.login_input.text = ""
                 self.ids.password_input.text = ""
                 self.sm.current = "start"
                 self.sm.change_user_label(self.manager.get_screen("start").ids.user_hello)
             else:
-                print("ERROR")
+                print("ERROR DURING LOGIN")

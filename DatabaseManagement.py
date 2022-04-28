@@ -35,17 +35,20 @@ class Connection:
     def create_user(self, username, password):
         hashed = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
         x = self.db.Users.insert_one({"username": username, "password": hashed})
-        print(x)
-        self.user = username
-        return True
+        if x:
+            self.user = username
+            return True
+        self.user = None
+        return False
 
     def login_user(self, username, password):
         print(username, password)
         user = self.db.Users.find_one({"username": username})
-        print(user)
-        if bcrypt.checkpw(password.encode("utf-8"), user["password"]):
-            self.user = username
-            return True
+        if user:
+            if bcrypt.checkpw(password.encode("utf-8"), user["password"]):
+                self.user = username
+                return True
+        self.user = None
         return False
 
     def logout_user(self):
@@ -53,17 +56,10 @@ class Connection:
         return True
 
     def save_quiz(self, quiz):
-        # print(quiz.name)
-        # print(quiz.category)
-        # for e in quiz.questions:
-        #     print(e.question)
-        #     print(e.answers)
-        #     print(e.correct)
         # quiz_obj = json.dumps(quiz.__dict__)
         quiz_obj = quiz.toJSON()
         quiz_obj = json.loads(quiz_obj)
         a = self.db.Quizes.insert_one(quiz_obj)
-        print(a)
         if a:
             return True
         return False

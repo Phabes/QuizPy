@@ -1,9 +1,8 @@
 from kivy.uix.screenmanager import Screen
-from database_management import Connection
 
 
 class RegisterScreen(Screen):
-    def __init__(self, sm, connection: Connection, **kw):
+    def __init__(self, sm, connection, **kw):
         super().__init__(**kw)
         self.sm = sm
         self.connection = connection
