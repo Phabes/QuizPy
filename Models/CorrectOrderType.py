@@ -1,7 +1,5 @@
 from kivy.uix.button import Button
-
 from Models.Question import Question
-
 
 class CorrectOrderType(Question):
     def __init__(self):
@@ -15,9 +13,9 @@ class CorrectOrderType(Question):
         # self.ids = ids
         # self.fun = fun
         for i in range(len(answers)):
-            button = Button(text=answers[i], size_hint=(1, None), height=100)
-            button.fbind("on_press", self.get_correct_answer, i, ids, fun)
-            ids.optionsGrid.add_widget(button)
+            answer = Button(text=answers[i], size_hint=(1, None), height=100)
+
+            ids.optionsGrid.add_widget(answer)
 
     def get_correct_answer(self, index, ids, fun, button):
         self.correct.append(index)

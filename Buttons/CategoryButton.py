@@ -17,10 +17,10 @@ class Category(Button):
         quiz_list = self.connection.find_quizes(self.name)
         for quiz in quiz_list:
             self.sm.current_screen.ids.quiz_grid.add_widget(Quiz(self.sm, quiz, text=quiz["name"]))
-        for quiz in quiz_list:
-            self.sm.current_screen.ids.quiz_grid.add_widget(Quiz(self.sm, quiz, text=quiz["name"]))
-        for quiz in quiz_list:
-            self.sm.current_screen.ids.quiz_grid.add_widget(Quiz(self.sm, quiz, text=quiz["name"]))
+        # for quiz in quiz_list:
+        #     self.sm.current_screen.ids.quiz_grid.add_widget(Quiz(self.sm, quiz, text=quiz["name"]))
+        # for quiz in quiz_list:
+        #     self.sm.current_screen.ids.quiz_grid.add_widget(Quiz(self.sm, quiz, text=quiz["name"]))
 
     def back_click(self, button):
         self.sm.transition.direction = "right"

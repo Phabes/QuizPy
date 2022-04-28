@@ -10,9 +10,9 @@ class StartScreen(Screen):
         for category in categories:
             self.ids.categoriesGrid.add_widget(Category(self.sm, self.connection, text=category["name"]))
         for category in categories:
-            self.ids.categoriesGrid.add_widget(Category(self.sm, self.connection,text=category["name"]))
+            self.ids.categoriesGrid.add_widget(Category(self.sm, self.connection, text=category["name"]))
         for category in categories:
-            self.ids.categoriesGrid.add_widget(Category(self.sm, self.connection,text=category["name"]))
+            self.ids.categoriesGrid.add_widget(Category(self.sm, self.connection, text=category["name"]))
 
     def create_quiz(self):
         self.sm.current = "create"
