@@ -5,7 +5,7 @@ from Buttons.QuizButton import QuizButton
 
 class CategoryScreen(Screen):
     def __init__(self, sm, connection, **kwargs):
-        super().__init__(**kwargs)
+        super(CategoryScreen, self).__init__(**kwargs)
         self.sm = sm
         self.connection = connection
         self.category_name = ""

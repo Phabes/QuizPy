@@ -2,8 +2,8 @@ from kivy.uix.screenmanager import Screen
 
 
 class LoginScreen(Screen):
-    def __init__(self, sm, connection, **kw):
-        super().__init__(**kw)
+    def __init__(self, sm, connection, **kwargs):
+        super(LoginScreen, self).__init__(**kwargs)
         self.sm = sm
         self.connection = connection
         self.l = "qwe"

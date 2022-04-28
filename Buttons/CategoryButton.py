@@ -3,7 +3,7 @@ from kivy.uix.button import Button
 
 class CategoryButton(Button):
     def __init__(self, sm, connection, **kwargs):
-        super().__init__(**kwargs)
+        super(CategoryButton, self).__init__(**kwargs)
         self.sm = sm
         self.connection = connection
         self.name = kwargs["text"]

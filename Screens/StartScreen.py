@@ -4,11 +4,10 @@ from Buttons.CategoryButton import CategoryButton
 
 class StartScreen(Screen):
     def __init__(self, sm, connection, **kwargs):
-        super().__init__(**kwargs)
+        super(StartScreen, self).__init__(**kwargs)
         self.sm = sm
         self.connection = connection
         self.refresh()
-
 
     def refresh(self):
         self.ids.categoriesGrid.clear_widgets()

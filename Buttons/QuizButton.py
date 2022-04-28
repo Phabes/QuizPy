@@ -3,8 +3,7 @@ from kivy.uix.button import Button
 
 class QuizButton(Button):
     def __init__(self, sm, quiz, **kwargs):
-        super().__init__(**kwargs)
-
+        super(QuizButton, self).__init__(**kwargs)
         self.name = kwargs["text"]
         print(self.name)
         self.sm = sm

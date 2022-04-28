@@ -1,9 +1,7 @@
-import json
-
+from ConnectionString import path
 from pymongo import MongoClient
 import bcrypt
-
-from ConnectionString import path
+import json
 
 
 class Connection:

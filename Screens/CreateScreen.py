@@ -65,7 +65,8 @@ class CreateScreen(Screen):
         self.stage = 3
         for question_type in self.question_types:
             # self.ids.optionsGrid.add_widget(CreateCategory(self.sm, self.connection, self, text=question_type))
-            self.ids.optionsGrid.add_widget(Button(text=question_type, size_hint=(1, None), height=400, on_press=self.set_next_question_type))
+            self.ids.optionsGrid.add_widget(
+                Button(text=question_type, size_hint=(1, None), height=400, on_press=self.set_next_question_type))
 
     def set_next_question_type(self, button):
         question_type = button.text
