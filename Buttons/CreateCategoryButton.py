@@ -2,10 +2,9 @@ from kivy.uix.button import Button
 
 
 class CreateCategory(Button):
-    def __init__(self, sm, connection, create_screen, **kwargs):
+    def __init__(self, sm, create_screen, **kwargs):
         super(CreateCategory, self).__init__(**kwargs)
         self.sm = sm
-        self.connection = connection
         self.create_screen = create_screen
         self.name = kwargs["text"]
 

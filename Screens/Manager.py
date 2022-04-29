@@ -3,14 +3,15 @@ from kivy.uix.screenmanager import ScreenManager
 from kivy.properties import ObjectProperty
 from kivy.properties import NumericProperty
 
+from DatabaseManagement import connection
+
 
 class Manager(ScreenManager):
     current_quiz = ObjectProperty(None, allownone=True)
     current_question_id = NumericProperty(-1)
 
-    def __init__(self, connection, **kwargs):
+    def __init__(self, **kwargs):
         super(Manager, self).__init__(**kwargs)
-        self.connection = connection
 
     def back_click(self, screen_name, button):
         self.transition.direction = "right"
@@ -18,14 +19,14 @@ class Manager(ScreenManager):
         self.current_screen.refresh()
 
     def change_user_label(self, label: Label):
-        label.text = "HELLO " + self.connection.user + " !"
+        label.text = "HELLO " + connection.user + " !"
 
     def create_quiz(self):
         self.current = "create"
         self.current_screen.get_all_categories()
 
     def logout_user(self):
-        if self.connection.logout_user():
+        if connection.logout_user():
             self.exit_quiz()
             self.current = "login"
 

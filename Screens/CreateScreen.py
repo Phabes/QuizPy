@@ -4,16 +4,16 @@ from kivy.uix.screenmanager import Screen
 from kivy.uix.textinput import TextInput
 
 from Buttons.CreateCategoryButton import CreateCategory
+from DatabaseManagement import connection
 from Models.ChooseOneType import ChooseOneType
 from Models.CorrectOrderType import CorrectOrderType
 from Models.Quiz import Quiz
 
 
 class CreateScreen(Screen):
-    def __init__(self, sm, connection, **kwargs):
+    def __init__(self, sm, **kwargs):
         super(CreateScreen, self).__init__(**kwargs)
         self.sm = sm
-        self.connection = connection
         self.question_types = ["chooseOne", "correctOrder"]
         self.quiz = Quiz()
         self.question = None
@@ -23,7 +23,7 @@ class CreateScreen(Screen):
     def save_quiz(self, button):
         print("SAVE")
         self.sm.current_screen.ids.optionsGrid.size_hint = 1, None
-        if self.connection.save_quiz(self.quiz):
+        if connection.save_quiz(self.quiz):
             self.sm.current = "start"
 
     def cancel_creating(self):
@@ -35,10 +35,10 @@ class CreateScreen(Screen):
     def get_all_categories(self):
         self.sm.current_screen.ids.optionsGrid.clear_widgets()
         self.sm.current_screen.ids.message_to_user.text = "Choose your category"
-        categories = self.connection.find_categories()
+        categories = connection.find_categories()
         for category in categories:
             self.sm.current_screen.ids.optionsGrid.add_widget(
-                CreateCategory(self.sm, self.connection, self, text=category["name"]))
+                CreateCategory(self.sm, self, text=category["name"]))
 
     def set_category(self, category):
         self.quiz.category = category
@@ -64,7 +64,7 @@ class CreateScreen(Screen):
         self.sm.current_screen.ids.message_to_user.text = "Choose next question type"
         self.stage = 3
         for question_type in self.question_types:
-            # self.ids.optionsGrid.add_widget(CreateCategory(self.sm, self.connection, self, text=question_type))
+            # self.ids.optionsGrid.add_widget(CreateCategory(self.sm, connection, self, text=question_type))
             self.ids.optionsGrid.add_widget(
                 Button(text=question_type, size_hint=(1, None), height=400, on_press=self.set_next_question_type))
 

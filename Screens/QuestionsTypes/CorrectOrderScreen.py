@@ -8,19 +8,22 @@ from kivy_garden.draggable import KXReorderableBehavior
 from kivy_garden.draggable import KXDroppableBehavior
 from kivy.clock import Clock
 
+
 class DraggableLabel(KXDraggableBehavior, Label):
-    answer_option=NumericProperty(-1)
+    answer_option = NumericProperty(-1)
     pass
 
 
 class AnswerBox(KXDroppableBehavior, BoxLayout):
     answer_option = NumericProperty(-1)
+
     def add_widget(self, widget, *args, **kwargs):
         widget.pos_hint = {'x': 0., 'y': 0.}
         return super().add_widget(widget)
 
     def accepts_drag(self, touch, draggable):
         return not self.children
+
 
 class ReordableGridLayout(KXReorderableBehavior, GridLayout):
     pass
@@ -82,12 +85,12 @@ class CorrectOrderScreen(Screen):
     def choose_answer(self, *args):
         self.check_fill()
         if not self.isFilled:
-            self.ids.submit.background_color="#f5425d"
+            self.ids.submit.background_color = "#f5425d"
         else:
-            valid=True
+            valid = True
             for i in self.ids.answer_destination_fields.children:
-                if self.question["correct"][i.answer_option]!=i.children[0].answer_option:
-                    valid=False
+                if self.question["correct"][i.answer_option] != i.children[0].answer_option:
+                    valid = False
                     break
             if valid:
                 self.ids.after_answer_label.text = "Correct!"
@@ -97,7 +100,7 @@ class CorrectOrderScreen(Screen):
                 self.ids.after_answer_label.text = "Incorrect!"
                 self.ids.after_answer_label.color = (1, 0, 0, 1)
                 self.ids.after_answer_label.visible = True
-            self.ids.submit.disabled=True
+            self.ids.submit.disabled = True
 
             Clock.schedule_once(self.next_question_callback, 2)
 
@@ -105,13 +108,13 @@ class CorrectOrderScreen(Screen):
         self.isCorrect = -1
         self.ids.after_answer_label.visible = False
         self.question = question
-        self.ids.submit.disabled=False
+        self.ids.submit.disabled = False
         self.ids.main_question.text = question['question']
         self.ids.firstAnswer.text = question['answers'][0]
-        self.ids.firstAnswer.answer_option=0
+        self.ids.firstAnswer.answer_option = 0
         self.ids.secondAnswer.text = question['answers'][1]
-        self.ids.secondAnswer.answer_option=1
+        self.ids.secondAnswer.answer_option = 1
         self.ids.thirdAnswer.text = question['answers'][2]
-        self.ids.thirdAnswer.answer_option=2
+        self.ids.thirdAnswer.answer_option = 2
         self.ids.fourthAnswer.text = question['answers'][3]
-        self.ids.fourthAnswer.answer_option=3
+        self.ids.fourthAnswer.answer_option = 3

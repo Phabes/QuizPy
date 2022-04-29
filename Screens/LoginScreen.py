@@ -1,11 +1,12 @@
 from kivy.uix.screenmanager import Screen
 
+from DatabaseManagement import connection
+
 
 class LoginScreen(Screen):
-    def __init__(self, sm, connection, **kwargs):
+    def __init__(self, sm, **kwargs):
         super(LoginScreen, self).__init__(**kwargs)
         self.sm = sm
-        self.connection = connection
         self.l = "qwe"
         self.p = "qwe"
 
@@ -14,10 +15,10 @@ class LoginScreen(Screen):
         # password = self.ids.password_input.text
         login = self.l
         password = self.p
-        if not self.connection.check_if_user_exist(login):
+        if not connection.check_if_user_exist(login):
             print("USER", login, "DOESNT EXIST")
         else:
-            logged = self.connection.login_user(login, password)
+            logged = connection.login_user(login, password)
             if logged:
                 # print("SUCCESS")
                 self.ids.login_input.text = ""
