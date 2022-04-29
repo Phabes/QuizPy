@@ -5,7 +5,7 @@ from kivy.properties import NumericProperty
 
 
 class Manager(ScreenManager):
-    current_quiz = ObjectProperty(None)
+    current_quiz = ObjectProperty(None, allownone=True)
     current_question_id = NumericProperty(-1)
 
     def __init__(self, connection, **kwargs):
@@ -26,6 +26,7 @@ class Manager(ScreenManager):
 
     def logout_user(self):
         if self.connection.logout_user():
+            self.exit_quiz()
             self.current = "login"
 
     def start_quiz(self, quiz):
@@ -41,6 +42,8 @@ class Manager(ScreenManager):
         self.current_question_id += 1
         if self.current_question_id >= len(self.current_quiz["questions"]):
             self.current = "category"
+            self.current_question_id = -1
+            self.current_quiz = None
         else:
             current_question = self.current_quiz["questions"][self.current_question_id]
             self.current = current_question["type"]

@@ -65,12 +65,16 @@ class CorrectOrderScreen(Screen):
         self.sm = sm
 
     def next_question_callback(self, dt):
+        for box in self.ids.answer_destination_fields.children:
+            element = box.children[0]
+            box.clear_widgets()
+            self.ids.answer_grid.add_widget(element)
         self.sm.next_question()
 
     def check_fill(self):
         self.isFilled = True
-        for i in self.ids.answer_destination_fields.children:
-            if len(i.children) == 0:
+        for box in self.ids.answer_destination_fields.children:
+            if len(box.children) == 0:
                 self.isFilled = False
 
         # self.ids.submit.disabled = not self.isFilled
@@ -94,14 +98,14 @@ class CorrectOrderScreen(Screen):
                 self.ids.after_answer_label.color = (1, 0, 0, 1)
                 self.ids.after_answer_label.visible = True
             self.ids.submit.disabled=True
+
             Clock.schedule_once(self.next_question_callback, 2)
 
     def update_data(self, question):
         self.isCorrect = -1
-        for i in self.ids.answer_destination_fields.children:
-            i.clear_widgets()
         self.ids.after_answer_label.visible = False
         self.question = question
+        self.ids.submit.disabled=False
         self.ids.main_question.text = question['question']
         self.ids.firstAnswer.text = question['answers'][0]
         self.ids.firstAnswer.answer_option=0
