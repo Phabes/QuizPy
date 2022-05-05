@@ -8,9 +8,7 @@ from Screens.LoginScreen import LoginScreen
 from Screens.RegisterScreen import RegisterScreen
 from Screens.CreateScreen import CreateScreen
 from Screens.Manager import Manager
-# from DatabaseManagement import Connection
 
-# connection = Connection()
 sm = Manager()
 
 
