@@ -23,6 +23,7 @@ class CreateScreen(Screen):
     def save_quiz(self, button):
         print("SAVE")
         self.sm.current_screen.ids.optionsGrid.size_hint = 1, None
+        self.quiz.set_username(connection.user)
         if connection.save_quiz(self.quiz):
             self.sm.current = "start"
 

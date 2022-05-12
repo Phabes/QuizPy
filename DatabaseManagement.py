@@ -13,7 +13,6 @@ class Connection:
         client = MongoClient(path)
         db = client.QuizPy
         self.db = db
-        # return db
 
     def find_categories(self):
         collection = self.db.Categories

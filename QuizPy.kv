@@ -270,9 +270,37 @@
                         size_hint: 0.5, 0.8
                         pos_hint: {"center_y": 0.5}
                         on_press: root.manager.logout_user()
+        AnchorLayout:
+            anchor_x:'center'
+            anchor_y:'top'
+            height: 80
+            size_hint:1, 1
+            GridLayout:
+                cols: 2
+                BoxLayout:
+                    Label:
+                        font_size: 20
+                        center_y: root.height*90/100
+                        text_size: self.size
+                        size: root.width*0.95, 50
+                        text: "YOUR QUIZES:"
+                        background_color: 1, 0, 0, 1
+                        halign: 'center'
+                        valign: 'middle'
+                    CheckBox:
+                        id: my_filter
+                        color: 1, 1, 0, 1
+                AnchorLayout:
+                    anchor_x:'center'
+                    anchor_y:'center'
+                    TextInput:
+                        id: name_filter
+                        size_hint: 0.8, None
+                        height: 30
+                        hint_text: "Quiz name filter"
         ScrollView:
             size_hint: 1,None
-            height: root.height - 80
+            height: root.height - 160
             scroll_wheel_distance: 80
             GridLayout:
                 id: quiz_grid

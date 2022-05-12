@@ -11,10 +11,10 @@ class LoginScreen(Screen):
         self.p = "qwe"
 
     def login_button_click(self):
-        # login = self.ids.login_input.text
-        # password = self.ids.password_input.text
-        login = self.l
-        password = self.p
+        login = self.ids.login_input.text
+        password = self.ids.password_input.text
+        # login = self.l
+        # password = self.p
         if not connection.check_if_user_exist(login):
             print("USER", login, "DOESNT EXIST")
         else:
