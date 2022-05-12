@@ -1,20 +1,19 @@
-import json
-
+from ConnectionString import path
 from pymongo import MongoClient
 import bcrypt
-
-from ConnectionString import path
+import json
 
 
 class Connection:
     def __init__(self):
-        self.db = self.create_connection()
+        self.db = None
         self.user = None
 
     def create_connection(self):
         client = MongoClient(path)
         db = client.QuizPy
-        return db
+        self.db = db
+        # return db
 
     def find_categories(self):
         collection = self.db.Categories
@@ -63,3 +62,7 @@ class Connection:
         if a:
             return True
         return False
+
+
+connection = Connection()
+connection.create_connection()

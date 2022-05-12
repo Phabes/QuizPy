@@ -333,14 +333,12 @@
         size: root.width, root.height
         spacing:5
         padding:[5,5,5,5]
-        
         BoxLayout:
             orientation: "horizontal"
             size_hint: 1,None
             height: 80
             AnchorLayout:
                 anchor_x: "left"
-
                 size_hint: 0.5, 1
                 BoxLayout:
                     size_hint: 1, 1
@@ -357,35 +355,60 @@
                             size_hint: 1, 1
             AnchorLayout:
                 anchor_x: "right"
-                size_hint: 0.5,1
+                size_hint: 0.5, 1
                 BoxLayout:
                     orientation: "horizontal"
                     size_hint: 0.5,1
                     Button:
-                        text: "LOGIN"
-                        size_hint: 0.5,1
-                        on_press: root.manager.current = "login"
+                        text: "CREATE QUIZ"
+                        size_hint: 0.5, 0.8
+                        pos_hint: {"center_y": 0.5}
+                        on_press: root.manager.create_quiz()
                     Button:
-                        text: "REGISTER"
-                        size_hint: 0.5,1
-                        on_press: root.manager.current = "register"
-        BoxLayout:
-            orientation:'vertical'
-            size:(root.width,root.height)
+                        text: "LOGOUT"
+                        size_hint: 0.5, 0.8
+                        pos_hint: {"center_y": 0.5}
+                        on_press: root.manager.logout_user()
         AnchorLayout:
             anchor_x:'center'
             anchor_y:'top'
-            size_hint:1,1
-            Label:
-                id: main_question
-                font_size:root.width/20
-                center_y:root.height*90/100
-                text_size:self.size
-                size:root.width*0.95,200
-                text: "[Error]"
-                background_color: 1, 0, 0, 1
-                halign: 'center'
-                valign: 'middle'
+            size_hint:1, 1
+            GridLayout:
+                rows: 2
+                size_hint: 1, 1
+                GridLayout:
+                    cols: 2
+                    size_hint: 1, 1
+                    Label:
+                        id: user_points
+                        font_size: 20
+                        center_y: root.height*90/100
+                        text_size: self.size
+                        size: root.width*0.95, 50
+                        text: ""
+                        background_color: 1, 0, 0, 1
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        id: remaining_time
+                        font_size: 20
+                        center_y: root.height*90/100
+                        text_size: self.size
+                        size: root.width*0.95, 50
+                        text: ""
+                        background_color: 1, 0, 0, 1
+                        halign: 'center'
+                        valign: 'middle'
+                Label:
+                    id: main_question
+                    font_size:root.width/20
+                    center_y:root.height*90/100
+                    text_size:self.size
+                    size:root.width*0.95,150
+                    text: "[Error]"
+                    background_color: 1, 0, 0, 1
+                    halign: 'center'
+                    valign: 'middle'
         AnchorLayout:
             anchor_x:'center'
             anchor_y:'top'
@@ -461,7 +484,7 @@
             padding:[10,10,10,10]
             spacing:[10,10]
             size:root.width,root.height*0.6
-            id:answerGrid
+            id:answer_grid
             canvas.before:
                 Color:
                     rgba:rgba("#AAAAAA")
@@ -533,12 +556,20 @@
             height: 80
             AnchorLayout:
                 anchor_x: "left"
-                size_hint: 0.5,1
-                Button:
-                    id: back_button
-                    text: "Quit"
-                    size_hint: 0.5,1
-
+                size_hint: 0.5, 1
+                BoxLayout:
+                    size_hint: 1, 1
+                    Button:
+                        id: back_button
+                        text: "QUIT"
+                        size_hint: 0.5, 0.8
+                        pos_hint: {"center_y": 0.5}
+                    BoxLayout:
+                        size_hint: 0.5, 0.8
+                        pos_hint: {"center_y": 0.5}
+                        Label:
+                            id: user_hello
+                            size_hint: 1, 1
             AnchorLayout:
                 anchor_x: "right"
                 size_hint: 0.5,1
@@ -555,24 +586,46 @@
                         size_hint: 0.5, 0.8
                         pos_hint: {"center_y": 0.5}
                         on_press: root.manager.logout_user()
-        BoxLayout:
-            orientation:'vertical'
-            size:(root.width,root.height)
         AnchorLayout:
             anchor_x:'center'
             anchor_y:'top'
-            size_hint:1,0.5
-            Label:
-                id: main_question
-                font_size:root.width/20
-                center_y:root.height*90/100
-                text_size:self.size
-                size:root.width*0.95,150
-                text: "[Error]"
-                background_color: 1, 0, 0, 1
-                halign: 'center'
-                valign: 'middle'
-
+            size_hint:1,0.7
+            GridLayout:
+                rows: 2
+                size_hint: 1, 1
+                GridLayout:
+                    cols: 2
+                    size_hint: 1, 1
+                    Label:
+                        id: user_points
+                        font_size: 20
+                        center_y: root.height*90/100
+                        text_size: self.size
+                        size: root.width*0.95, 50
+                        text: ""
+                        background_color: 1, 0, 0, 1
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        id: remaining_time
+                        font_size: 20
+                        center_y: root.height*90/100
+                        text_size: self.size
+                        size: root.width*0.95, 50
+                        text: ""
+                        background_color: 1, 0, 0, 1
+                        halign: 'center'
+                        valign: 'middle'
+                Label:
+                    id: main_question
+                    font_size:root.width/20
+                    center_y:root.height*90/100
+                    text_size:self.size
+                    size:root.width*0.95,150
+                    text: "[Error]"
+                    background_color: 1, 0, 0, 1
+                    halign: 'center'
+                    valign: 'middle'
         AnchorLayout:
             anchor_x:'center'
             anchor_y:'top'
