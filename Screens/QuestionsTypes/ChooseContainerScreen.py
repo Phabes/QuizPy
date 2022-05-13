@@ -7,7 +7,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy_garden.draggable import KXDraggableBehavior
 from kivy_garden.draggable import KXDroppableBehavior
 from kivy.clock import Clock
-
+import asynckivy as ak
 
 class Container(BoxLayout):
     answer_option = NumericProperty(-1)
@@ -34,11 +34,16 @@ class CategoryBox(KXDroppableBehavior, BoxLayout):
     def accepts_drag(self, touch, draggable):
         if(self.answer_option == draggable.answer_option):
             self.parentObject.correct_answer_drop()
+            draggable.parent.remove_widget(draggable)
+            self.add_widget(draggable)
+            ak.start(self._dispose_item(draggable))
             return True
         else:
             return False
 
-
+    async def _dispose_item(self,draggable):
+        await ak.animate(draggable,opacity=0,d=.5)
+        self.remove_widget(draggable)
 class ChooseContainerScreen(Screen):
     question = ObjectProperty(None)
     isCorrect = NumericProperty(-1)
@@ -49,7 +54,7 @@ class ChooseContainerScreen(Screen):
         self.sm = sm
         self.time = 0
         self.interval: Clock.time = None
-        self.max_time = 2000
+        self.max_time = 30
 
     def next_question_callback(self, dt):
         for box in self.ids.answer_destination_fields.children:
@@ -58,14 +63,31 @@ class ChooseContainerScreen(Screen):
                 box.clear_widgets()
                 self.ids.answer_grid.add_widget(element)
         self.sm.next_question()
+
     def correct_answer_drop(self):
         self.remainingAnswers-=1
         if self.remainingAnswers==0:
             self.finalize_answer()
 
     def finalize_answer(self,*args):
-        print("XD")
-        pass
+        if self.time == 0:
+            self.ids.after_answer_label.text = "Time's up!"
+            self.ids.after_answer_label.color = (1, 0, 0, 1)
+            self.ids.after_answer_label.visible = True
+            self.interval.cancel()
+            Clock.schedule_once(self.next_question_callback, 2)
+        else:
+            self.sm.set_time_end()
+            self.ids.after_answer_label.text = "Correct!"
+            self.ids.after_answer_label.color = (1, 0, 1, 1)
+            old_points = self.sm.points
+            to_add = self.sm.calculate_points(self.max_time)
+            self.sm.smooth_change_points(old_points, to_add)
+            self.sm.increase_multiply()
+
+            self.interval.cancel()
+            Clock.schedule_once(self.next_question_callback, 2)
+
     def update_time(self,dt):
         self.time -= 1
         self.ids.remaining_time.text = "Remaining time: " + str(self.time)
@@ -84,6 +106,11 @@ class ChooseContainerScreen(Screen):
         self.ids.main_question.text = question['question']
         shuffle(self.question['answers'])
         self.remainingAnswers = len(self.question['answers'])
+        for child in self.ids.answer_destination_fields.children:
+            self.ids.answer_destination_fields.remove_widget(child)
+        for child in self.ids.answer_grid.children:
+            self.ids.answer_grid.remove_widget(child)
+
         for i, text in enumerate(self.question['containers']):
             self.ids.answer_destination_fields.add_widget(
                 Container(answer_option=i, text=text,parentObject=self)

@@ -143,6 +143,10 @@ class CorrectOrderScreen(Screen):
         self.ids.submit.disabled = False
         self.ids.main_question.text = question['question']
         zipped = self.shuffle_answers()
+        for child in self.ids.answer_destination_fields.children:
+            self.ids.answer_destination_fields.remove_widget(child)
+        for child in self.ids.answer_grid.children:
+            self.ids.answer_grid.remove_widget(child)
         for i in range(len(zipped)):
             self.ids.answer_destination_fields.add_widget(
                 AnswerBox(answer_option=i)
