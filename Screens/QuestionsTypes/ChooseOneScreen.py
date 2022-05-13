@@ -16,7 +16,7 @@ class ChooseOneScreen(Screen):
         self.time = 0
         self.interval: Clock.time = None
         self.block = False
-        self.max_time = 5
+        self.max_time = 15
 
     def next_question_callback(self, dt):
         self.block = False

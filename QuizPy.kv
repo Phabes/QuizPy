@@ -1,139 +1,5 @@
 #:kivy 1.0.9
 
-#<ChooseOneQuestion>:
-#    BoxLayout:
-#        orientation:'vertical'
-#        size:(root.width,root.height)
-#        AnchorLayout:
-#            anchor_x:'center'
-#            anchor_y:'top'
-#            size_hint:1,0.5
-#            Label:
-#                id: mainQuestion
-#                font_size:root.width/20
-#                center_y:root.height*90/100
-#                text_size:self.size
-#                size:root.width*0.95,150
-#                text: "[Error]"
-#                background_color: 1, 0, 0, 1
-#                halign: 'center'
-#                valign: 'middle'
-#
-#        AnchorLayout:
-#            anchor_x:'center'
-#            anchor_y:'top'
-#            size_hint:1,0.3
-#            Label:
-#                id: afterAnswerLabel
-#                visible: False
-#                font_size:root.width/20
-#                center_x:root.width/2
-#                center_y:root.height*80/100
-#                text: "[Error]"
-#                size_hint_x: 1 if self.visible else 0
-#                opacity: 1 if self.visible else 0
-#                disabled: not self.visible
-#
-#        GridLayout:
-#            cols:2
-#            rows:2
-#            size:root.width,root.height*0.6
-#            Button:
-#                id: firstAnswer
-#                font_size:self.width/7
-#                center_x: root.width*1/4
-#                center_y:root.height*5/10
-#                on_press:root.choose_answer(0)
-#                background_color:"#00ff00" if root.isCorrect==0 else ( "#ff0000" if root.isCorrect>=0 else "#AAAAAA" )
-#                text: "[Error]"
-#            Button:
-#                id: secondAnswer
-#                font_size:self.width/7
-#                center_x: root.width*3/4
-#                center_y:root.height*5/10
-#                on_press:root.choose_answer(1)
-#                background_color:"#00ff00" if root.isCorrect==1 else ( "#ff0000" if root.isCorrect>=0 else "#AAAAAA" )
-#                text: "[Error]"
-#            Button:
-#                id: thirdAnswer
-#                font_size:self.width/7
-#                center_x: root.width*1/4
-#                center_y:root.height*3/10
-#                on_press:root.choose_answer(2)
-#                background_color:"#00ff00" if root.isCorrect==2 else ( "#ff0000" if root.isCorrect>=0 else "#AAAAAA" )
-#                text: "[Error]"
-#            Button:
-#                id: fourthAnswer
-#                font_size:self.width/7
-#                center_x: root.width*3/4
-#                center_y:root.height*3/10
-#                on_press:root.choose_answer(3)
-#                background_color:"#00ff00" if root.isCorrect==3 else ( "#ff0000" if root.isCorrect>=0 else "#AAAAAA" )
-#                text: "[Error]"
-
-#<CorrectOrderQuestion>:
-#    BoxLayout:
-#        orientation:'vertical'
-#        size:(root.width,root.height)
-#        AnchorLayout:
-#            anchor_x:'center'
-#            anchor_y:'top'
-#            size_hint:1,0.5
-#            Label:
-#                id: mainQuestion
-#                font_size:root.width/20
-#                center_y:root.height*90/100
-#                text_size:self.size
-#                size:root.width*0.95,150
-#                text: "[Error]"
-#                background_color: 1, 0, 0, 1
-#                halign: 'center'
-#                valign: 'middle'
-#
-#        AnchorLayout:
-#            anchor_x:'center'
-#            anchor_y:'top'
-#            size_hint:1,0.3
-#            Label:
-#                id: afterAnswerLabel
-#                visible: False
-#                font_size:root.width/20
-#                center_x:root.width/2
-#                center_y:root.height*80/100
-#                text: "[Error]"
-#                size_hint_x: 1 if self.visible else 0
-#                opacity: 1 if self.visible else 0
-#                disabled: not self.visible
-
-#OLD NAVBAR
-#    BoxLayout:
-#        orientation: "vertical"
-#        size: root.width, root.height
-#        BoxLayout:
-#            orientation: "horizontal"
-#            size_hint: 1,None
-#            height: 80
-#            AnchorLayout:
-#                anchor_x: "left"
-#                size_hint: 0.5,1
-#                Button:
-#                    id: back_button
-#                    text: "BACK"
-#                    size_hint: 0.5,1
-#            AnchorLayout:
-#                anchor_x: "right"
-#                size_hint: 0.5,1
-#                BoxLayout:
-#                    orientation: "horizontal"
-#                    size_hint: 0.5,1
-#                    Button:
-#                        text: "LOGIN"
-#                        size_hint: 0.5,1
-#                        on_press: root.manager.current = "login"
-#                    Button:
-#                        text: "REGISTER"
-#                        size_hint: 0.5,1
-#                        on_press: root.manager.current = "register"
 
 <CategoryButton>:
     size_hint: 1, None
@@ -326,13 +192,43 @@
             height: root.height - 80
             anchor_y: "center"
             anchor_x: "center"
-
-<CorrectOrderScreen>
+<DraggableLabel>:
+    drag_clas:'answer'
+    drag_timeout:0
+    font_size:'40sp'
+    text: self.text
+    canvas.before:
+        Color:
+            rgba:rgba("#7FFFD4") if self.is_being_dragged else rgba("#40E0D0")
+        Rectangle:
+            size: self.size
+            pos: self.pos
+<Container>:
+    orientation:'vertical'
+    Label:
+        font_size: 20
+        center_y: root.height*90/100
+        text_size: self.size
+        size: root.width*0.95, 50
+        text: root.text
+        background_color: 1, 0, 0, 1
+        halign: 'center'
+        valign: 'middle'
+    CategoryBox:
+        drag_cls:'answer'
+        drag_classes:['answer',]
+        answer_option:root.answer_option
+        canvas.before:
+            Color:
+                rgba:rgba('#AAAAAA')
+            Line:
+                rectangle:[*self.pos,*self.size,]
+<ChooseContainerScreen>:
     BoxLayout:
         orientation: "vertical"
         size: root.width, root.height
         spacing:5
-        padding:[5,5,5,5]
+        padding:5
         BoxLayout:
             orientation: "horizontal"
             size_hint: 1,None
@@ -401,7 +297,136 @@
                         valign: 'middle'
                 Label:
                     id: main_question
-                    font_size:root.width/20
+                    font_size:root.width/25
+                    center_y:root.height*90/100
+                    text_size:self.size
+                    size:root.width*0.95,150
+                    text: "[Error]"
+                    background_color: 1, 0, 0, 1
+                    halign: 'center'
+                    valign: 'middle'
+        AnchorLayout:
+            anchor_x:'center'
+            anchor_y:'top'
+            size_hint:1,0.3
+            Label:
+                id: after_answer_label
+                visible: False
+                font_size:root.width/20
+                center_x:root.width/2
+                center_y:root.height*80/100
+                text: "[Error]"
+                size_hint_x: 1 if self.visible else 0
+                opacity: 1 if self.visible else 0
+                disabled: not self.visible
+        BoxLayout:
+            orientation:'horizontal'
+            padding:10
+            spacing:10
+            size:root.width,root.height*0.2
+            id:answer_destination_fields
+        GridLayout:
+            id:answer_grid
+            cols:3
+            padding:20
+            spacing:20
+
+<AnswerBox>:
+    drag_cls:'answer'
+    drag_classes:['answer',]
+    parentObject:root.parentObject
+    canvas.before:
+        Color:
+            rgba:rgba('#AAAAAA')
+        Line:
+            rectangle:[*self.pos,*self.size,]  
+<DraggableLabel>:
+    drag_cls:'answer'
+    drag_timeout:0
+    font_size:'40sp'
+    background_color:"#00ff00" #if self.isCorrect==0 else ( "#ff0000" if self.isCorrect>=0 else "#AAAAAA" )
+    text: self.text
+    canvas.before:
+        Color:
+            rgba:rgba("#7FFFD4") if self.is_being_dragged else rgba("#40E0D0")
+        Rectangle:
+            size: self.size
+            pos: self.pos
+<CorrectOrderScreen>
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+        spacing:5
+        padding:5
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: 1,None
+            height: 80
+            AnchorLayout:
+                anchor_x: "left"
+                size_hint: 0.5, 1
+                BoxLayout:
+                    size_hint: 1, 1
+                    Button:
+                        id: back_button
+                        text: "QUIT"
+                        size_hint: 0.5, 0.8
+                        pos_hint: {"center_y": 0.5}
+                    BoxLayout:
+                        size_hint: 0.5, 0.8
+                        pos_hint: {"center_y": 0.5}
+                        Label:
+                            id: user_hello
+                            size_hint: 1, 1
+            AnchorLayout:
+                anchor_x: "right"
+                size_hint: 0.5, 1
+                BoxLayout:
+                    orientation: "horizontal"
+                    size_hint: 0.5,1
+                    Button:
+                        text: "CREATE QUIZ"
+                        size_hint: 0.5, 0.8
+                        pos_hint: {"center_y": 0.5}
+                        on_press: root.manager.create_quiz()
+                    Button:
+                        text: "LOGOUT"
+                        size_hint: 0.5, 0.8
+                        pos_hint: {"center_y": 0.5}
+                        on_press: root.manager.logout_user()
+        AnchorLayout:
+            anchor_x:'center'
+            anchor_y:'top'
+            size_hint:1, 1
+            GridLayout:
+                rows: 2
+                size_hint: 1, 1
+                GridLayout:
+                    cols: 2
+                    size_hint: 1, 1
+                    Label:
+                        id: user_points
+                        font_size: 20
+                        center_y: root.height*90/100
+                        text_size: self.size
+                        size: root.width*0.95, 50
+                        text: ""
+                        background_color: 1, 0, 0, 1
+                        halign: 'center'
+                        valign: 'middle'
+                    Label:
+                        id: remaining_time
+                        font_size: 20
+                        center_y: root.height*90/100
+                        text_size: self.size
+                        size: root.width*0.95, 50
+                        text: ""
+                        background_color: 1, 0, 0, 1
+                        halign: 'center'
+                        valign: 'middle'
+                Label:
+                    id: main_question
+                    font_size:root.width/25
                     center_y:root.height*90/100
                     text_size:self.size
                     size:root.width*0.95,150
@@ -425,65 +450,32 @@
                 disabled: not self.visible
         Button:
             id: submit
-            font_size:'40sp'
-            size:root.width,root.height*0.2
+            font_size:'20sp'
+            size_hint:1,.30
             center_x: root.width*3/4
-            center_y:root.height*5/10
-            on_press:root.choose_answer()
+            center_y:root.height*6/10
+            on_press:root.finalize_answer()
             background_color:"#AAAAAA"
             text: "Submit!"
-        GridLayout:
-            cols:4
-            rows:1
-            padding:[10,10,10,10]
-            spacing:[10,10]
-            size:root.width,root.height*0.3
+            canvas.before:
+                Color:
+                    rgba:rgba('#AAAAAA')
+                Line:
+                    rectangle:[*self.pos,*self.size,]
+        BoxLayout:
+            orientation:'horizontal'
+
+            padding:10
+            spacing:10
+            size:root.width,root.height*0.2
             id:answer_destination_fields
-            AnswerBox:
-                drag_cls:'answer'
-                drag_classes:['answer',]
-                answer_option:0
-                canvas.before:
-                    Color:
-                        rgba:rgba('#AAAAAA')
-                    Line:
-                        rectangle:[*self.pos,*self.size,]
-            AnswerBox:
-                drag_cls:'answer'
-                drag_classes:['answer',]
-                answer_option:1
-                canvas.before:
-                    Color:
-                        rgba:rgba('#AAAAAA')
-                    Line:
-                        rectangle:[*self.pos,*self.size,]
-            AnswerBox:
-                drag_cls:'answer'
-                drag_classes:['answer',]
-                answer_option:2
-                canvas.before:
-                    Color:
-                        rgba:rgba('#AAAAAA')
-                    Line:
-                        rectangle:[*self.pos,*self.size,]
-            AnswerBox:
-                drag_cls:'answer'
-                drag_classes:['answer',]
-                answer_option:3
-                canvas.before:
-                    Color:
-                        rgba:rgba('#AAAAAA')
-                    Line:
-                        rectangle:[*self.pos,*self.size,]
             
 
-        ReordableGridLayout:
+        ReordableBoxLayout:
             drag_classes:['answer',]
-            cols:4
-            rows:1
-            padding:[10,10,10,10]
-            spacing:[10,10]
-            size:root.width,root.height*0.6
+            spacing:20
+            padding:20
+            size:root.width,root.height*0.4
             id:answer_grid
             canvas.before:
                 Color:
@@ -491,60 +483,7 @@
                 Line:
                     rectangle:[*self.pos,*self.size,]
 
-            DraggableLabel:
-                drag_cls:'answer'
-                drag_timeout:0
-                id: firstAnswer
-                font_size:'40sp'
-                background_color:"#00ff00" if root.isCorrect==0 else ( "#ff0000" if root.isCorrect>=0 else "#AAAAAA" )
-                text: "[Error]"
-                canvas.before:
-                    Color:
-                        rgba:rgba("#7FFFD4") if self.is_being_dragged else rgba("#40E0D0")
-                    Rectangle:
-                        size: self.size
-                        pos: self.pos
-            DraggableLabel:
-                drag_cls:'answer'
-                drag_timeout:0       
-                id: secondAnswer
-                font_size:'40sp'
-                background_color:"#00ff00" if root.isCorrect==1 else ( "#ff0000" if root.isCorrect>=0 else "#AAAAAA" )
-                text: "[Error]"
-                canvas.before:
-                    Color:
-                        rgba:rgba("#7FFFD4") if self.is_being_dragged else rgba("#40E0D0")
-                    Rectangle:
-                        size: self.size
-                        pos: self.pos
-            DraggableLabel:
-                drag_cls:'answer'
-                drag_timeout:0
-                id: thirdAnswer
-                font_size:'40sp'
-                background_color:"#00ff00" if root.isCorrect==2 else ( "#ff0000" if root.isCorrect>=0 else "#AAAAAA" )
-                text: "[Error]"
-                canvas.before:
-                    Color:
-                        rgba:rgba("#7FFFD4") if self.is_being_dragged else rgba("#40E0D0")
-                    Rectangle:
-                        size: self.size
-                        pos: self.pos
-            DraggableLabel:
-                drag_cls:'answer'
-                drag_timeout:0
-                id: fourthAnswer
-                font_size:'40sp'
-
-                background_color:"#00ff00" if root.isCorrect==3 else ( "#ff0000" if root.isCorrect>=0 else "#AAAAAA" )
-                text: "[Error]"  
-                canvas.before:
-                    Color:
-                        rgba:rgba("#7FFFD4") if self.is_being_dragged else rgba("#40E0D0")
-                    Rectangle:
-                        size: self.size
-                        pos: self.pos
-                
+            
 
 <ChooseOneScreen>
     BoxLayout:
@@ -651,7 +590,7 @@
                 font_size:self.width/7
                 center_x: root.width*1/4
                 center_y:root.height*5/10
-                on_press:root.choose_answer(0)
+                on_press:root.finalize_answer(0)
                 background_color:"#00ff00" if root.isCorrect==0 else ( "#ff0000" if root.isCorrect>=0 else "#AAAAAA" )
                 text: "[Error]"
             Button:
@@ -659,7 +598,7 @@
                 font_size:self.width/7
                 center_x: root.width*3/4
                 center_y:root.height*5/10
-                on_press:root.choose_answer(1)
+                on_press:root.finalize_answer(1)
                 background_color:"#00ff00" if root.isCorrect==1 else ( "#ff0000" if root.isCorrect>=0 else "#AAAAAA" )
                 text: "[Error]"
             Button:
@@ -667,7 +606,7 @@
                 font_size:self.width/7
                 center_x: root.width*1/4
                 center_y:root.height*3/10
-                on_press:root.choose_answer(2)
+                on_press:root.finalize_answer(2)
                 background_color:"#00ff00" if root.isCorrect==2 else ( "#ff0000" if root.isCorrect>=0 else "#AAAAAA" )
                 text: "[Error]"
             Button:
@@ -675,7 +614,7 @@
                 font_size:self.width/7
                 center_x: root.width*3/4
                 center_y:root.height*3/10
-                on_press:root.choose_answer(3)
+                on_press:root.finalize_answer(3)
                 background_color:"#00ff00" if root.isCorrect==3 else ( "#ff0000" if root.isCorrect>=0 else "#AAAAAA" )
                 text: "[Error]"
 
