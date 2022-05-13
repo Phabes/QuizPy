@@ -50,6 +50,7 @@ class Manager(ScreenManager):
 
     def next_question(self):
         self.current_question_id += 1
+        print(self,self.current_question_id,self.current_quiz["questions"])
         if self.current_question_id >= len(self.current_quiz["questions"]):
             self.current = "category"
             self.current_question_id = -1

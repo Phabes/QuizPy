@@ -16,7 +16,7 @@ class ChooseOneScreen(Screen):
         self.time = 0
         self.interval: Clock.time = None
         self.block = False
-        self.max_time = 5
+        self.max_time = 15
 
     def next_question_callback(self, dt):
         self.block = False
@@ -37,7 +37,7 @@ class ChooseOneScreen(Screen):
     #     step = diff // 100
     #     interval = Clock.schedule_interval(lambda x: self.small_change(step, maxi, interval), 1 / 100)
 
-    def choose_answer(self, *args):
+    def finalize_answer(self, *args):
         if not self.block:
             self.sm.set_time_end()
             if not self.ids.after_answer_label.visible:
@@ -62,7 +62,7 @@ class ChooseOneScreen(Screen):
         self.time -= 1
         self.ids.remaining_time.text = "Remaining time: " + str(self.time)
         if self.time == 0:
-            self.choose_answer(None)
+            self.finalize_answer(None)
 
     def shuffle_answers(self):
         zipped = list(

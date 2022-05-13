@@ -1,9 +1,8 @@
 from random import shuffle
 
-from kivy.properties import ObjectProperty, NumericProperty, BooleanProperty
+from kivy.properties import ObjectProperty, NumericProperty, BooleanProperty,StringProperty
 from kivy.uix.screenmanager import Screen
 from kivy.uix.label import Label
-from kivy.uix.gridlayout import GridLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy_garden.draggable import KXDraggableBehavior
 from kivy_garden.draggable import KXReorderableBehavior
@@ -13,6 +12,9 @@ from kivy.clock import Clock
 
 class DraggableLabel(KXDraggableBehavior, Label):
     answer_option = NumericProperty(-1)
+    text = StringProperty()
+    isCorrect = NumericProperty(-1)
+
     pass
 
 
@@ -27,7 +29,7 @@ class AnswerBox(KXDroppableBehavior, BoxLayout):
         return not self.children
 
 
-class ReordableGridLayout(KXReorderableBehavior, GridLayout):
+class ReordableBoxLayout(KXReorderableBehavior, BoxLayout):
     pass
 
 
@@ -70,14 +72,12 @@ class CorrectOrderScreen(Screen):
         self.sm = sm
         self.time = 0
         self.interval: Clock.time = None
-        self.max_time = 5
-
+        self.max_time = 30
+    def getIsCorrect(self):
+        return self.isCorrect
     def next_question_callback(self, dt):
-        for box in self.ids.answer_destination_fields.children:
-            if len(box.children) != 0:
-                element = box.children[0]
-                box.clear_widgets()
-                self.ids.answer_grid.add_widget(element)
+        self.ids.answer_destination_fields.clear_widgets()
+        self.ids.answer_grid.clear_widgets()
         self.sm.next_question()
 
     def check_fill(self):
@@ -88,7 +88,7 @@ class CorrectOrderScreen(Screen):
 
         # self.ids.submit.disabled = not self.isFilled
 
-    def choose_answer(self, *args):
+    def finalize_answer(self,*args):
         if self.time == 0:
             self.ids.after_answer_label.text = "Time's up!"
             self.ids.after_answer_label.color = (1, 0, 0, 1)
@@ -129,7 +129,7 @@ class CorrectOrderScreen(Screen):
         self.time -= 1
         self.ids.remaining_time.text = "Remaining time: " + str(self.time)
         if self.time == 0:
-            self.choose_answer(None)
+            self.finalize_answer()
 
     def shuffle_answers(self):
         zipped = [(answer, index) for index, answer in enumerate(self.question['answers'])]
@@ -143,14 +143,17 @@ class CorrectOrderScreen(Screen):
         self.ids.submit.disabled = False
         self.ids.main_question.text = question['question']
         zipped = self.shuffle_answers()
-        self.ids.firstAnswer.text = zipped[0][0]
-        self.ids.firstAnswer.answer_option = zipped[0][1]
-        self.ids.secondAnswer.text = zipped[1][0]
-        self.ids.secondAnswer.answer_option = zipped[1][1]
-        self.ids.thirdAnswer.text = zipped[2][0]
-        self.ids.thirdAnswer.answer_option = zipped[2][1]
-        self.ids.fourthAnswer.text = zipped[3][0]
-        self.ids.fourthAnswer.answer_option = zipped[3][1]
+        for child in self.ids.answer_destination_fields.children:
+            self.ids.answer_destination_fields.remove_widget(child)
+        for child in self.ids.answer_grid.children:
+            self.ids.answer_grid.remove_widget(child)
+        for i in range(len(zipped)):
+            self.ids.answer_destination_fields.add_widget(
+                AnswerBox(answer_option=i)
+            )
+        for answer in zipped:
+            newItem=DraggableLabel(answer_option=answer[1], text=answer[0])
+            self.ids.answer_grid.add_widget(newItem)
         self.time = self.max_time
         self.ids.remaining_time.text = "Remaining time: " + str(self.time)
         self.ids.user_points.text = "Points: " + str(self.sm.points)
