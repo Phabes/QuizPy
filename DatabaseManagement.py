@@ -21,8 +21,26 @@ class Connection:
 
     def find_quizes(self, categoryName):
         collection = self.db.Quizes
-        quiz_list = list(collection.find({"category": categoryName}))
+        quiz_list = list(collection.find({"category": categoryName}, {"results": 0}))
         return quiz_list
+
+    def find_k_best_results(self, quiz_id, k):
+        collection = self.db.Quizes
+        ranking = list(collection.aggregate([
+            {"$match": {
+                "_id": quiz_id
+            }},
+            {"$unwind": "$results"},
+            {"$sort": {
+                "results.points": -1
+            }},
+            {"$project": {
+                "_id": 0,
+                "results": 1
+            }},
+            {"$limit": k}
+        ]))
+        return ranking
 
     def check_if_user_exist(self, username):
         collection = self.db.Users
@@ -61,6 +79,10 @@ class Connection:
         if a:
             return True
         return False
+
+    def save_score(self, quiz_id, points):
+        new_result = {"username": self.user, "points": points}
+        self.db.Quizes.update_one({"_id": quiz_id}, {"$push": {"results": new_result}})
 
 
 connection = Connection()

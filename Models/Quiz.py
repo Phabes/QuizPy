@@ -7,6 +7,7 @@ class Quiz:
         self.name = None
         self.questions = []
         self.username = None
+        self.results = []
 
     def set_username(self, username):
         self.username = username

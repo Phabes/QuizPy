@@ -1,14 +1,14 @@
-from kivy.clock import Clock
-from kivy.uix.button import Button
-from kivy.uix.screenmanager import Screen
-
-
-class QuizScreen(Screen):
-    def __init__(self, sm, **kwargs):
-        super(QuizScreen, self).__init__(**kwargs)
-        self.sm = sm
-        self.time = 0
-        self.interval: Clock.time = None
+# from kivy.clock import Clock
+# from kivy.uix.button import Button
+# from kivy.uix.screenmanager import Screen
+#
+#
+# class QuizScreen(Screen):
+#     def __init__(self, sm, **kwargs):
+#         super(QuizScreen, self).__init__(**kwargs)
+#         self.sm = sm
+#         self.time = 0
+#         self.interval: Clock.time = None
 
     # def refresh(self):
     #     self.sm.current_screen.ids.back_button.funbind("on_press", self.sm.back_click, "category")
@@ -34,8 +34,8 @@ class QuizScreen(Screen):
     #     self.sm.current_screen.ids.thirdAnswer.text = answers[2]
     #     self.sm.current_screen.ids.fourthAnswer.text = answers[3]
 
-    def update_time(self, dt):
-        print(self.time)
-        if self.time == 0:
-            self.choose_answer(None)
-        self.time -= 1
+    # def update_time(self, dt):
+    #     print(self.time)
+    #     if self.time == 0:
+    #         self.choose_answer(None)
+    #     self.time -= 1
