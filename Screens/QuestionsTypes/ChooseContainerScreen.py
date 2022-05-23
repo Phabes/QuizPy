@@ -106,17 +106,13 @@ class ChooseContainerScreen(Screen):
         self.ids.main_question.text = question['question']
         shuffle(self.question['answers'])
         self.remainingAnswers = len(self.question['answers'])
-        for child in self.ids.answer_destination_fields.children:
-            self.ids.answer_destination_fields.remove_widget(child)
-        for child in self.ids.answer_grid.children:
-            self.ids.answer_grid.remove_widget(child)
-
+        self.ids.answer_destination_fields.clear_widgets()
+        self.ids.answer_grid.clear_widgets()
         for i, text in enumerate(self.question['containers']):
             self.ids.answer_destination_fields.add_widget(
                 Container(answer_option=i, text=text,parentObject=self)
             )
         for answer in self.question['answers']:
-            print(answer)
             self.ids.answer_grid.add_widget(
                 DraggableLabel(answer_option=answer['container_id'], text=answer['text'])
             )
