@@ -1,6 +1,6 @@
 from random import shuffle
 
-from kivy.properties import ObjectProperty, NumericProperty, BooleanProperty,StringProperty
+from kivy.properties import ObjectProperty, NumericProperty, BooleanProperty, StringProperty
 from kivy.uix.screenmanager import Screen
 from kivy.uix.label import Label
 from kivy.uix.boxlayout import BoxLayout
@@ -73,8 +73,10 @@ class CorrectOrderScreen(Screen):
         self.time = 0
         self.interval: Clock.time = None
         self.max_time = 30
+
     def getIsCorrect(self):
         return self.isCorrect
+
     def next_question_callback(self, dt):
         self.ids.answer_destination_fields.clear_widgets()
         self.ids.answer_grid.clear_widgets()
@@ -88,7 +90,7 @@ class CorrectOrderScreen(Screen):
 
         # self.ids.submit.disabled = not self.isFilled
 
-    def finalize_answer(self,*args):
+    def finalize_answer(self, *args):
         if self.time == 0:
             self.ids.after_answer_label.text = "Time's up!"
             self.ids.after_answer_label.color = (1, 0, 0, 1)
@@ -152,7 +154,7 @@ class CorrectOrderScreen(Screen):
                 AnswerBox(answer_option=i)
             )
         for answer in zipped:
-            newItem=DraggableLabel(answer_option=answer[1], text=answer[0])
+            newItem = DraggableLabel(answer_option=answer[1], text=answer[0])
             self.ids.answer_grid.add_widget(newItem)
         self.time = self.max_time
         self.ids.remaining_time.text = "Remaining time: " + str(self.time)

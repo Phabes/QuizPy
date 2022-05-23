@@ -9,11 +9,11 @@ from kivy_garden.draggable import KXDroppableBehavior
 from kivy.clock import Clock
 import asynckivy as ak
 
+
 class Container(BoxLayout):
     answer_option = NumericProperty(-1)
     text = StringProperty()
     parentObject = ObjectProperty()
-
 
 
 class DraggableLabel(KXDraggableBehavior, Label):
@@ -27,12 +27,13 @@ class DraggableLabel(KXDraggableBehavior, Label):
 class CategoryBox(KXDroppableBehavior, BoxLayout):
     answer_option = NumericProperty(-1)
     parentObject = ObjectProperty()
+
     def add_widget(self, widget, *args, **kwargs):
         widget.pos_hint = {'x': 0., 'y': 0.}
         return super().add_widget(widget)
 
     def accepts_drag(self, touch, draggable):
-        if(self.answer_option == draggable.answer_option):
+        if (self.answer_option == draggable.answer_option):
             self.parentObject.correct_answer_drop()
             draggable.parent.remove_widget(draggable)
             self.add_widget(draggable)
@@ -41,9 +42,11 @@ class CategoryBox(KXDroppableBehavior, BoxLayout):
         else:
             return False
 
-    async def _dispose_item(self,draggable):
-        await ak.animate(draggable,opacity=0,d=.5)
+    async def _dispose_item(self, draggable):
+        await ak.animate(draggable, opacity=0, d=.5)
         self.remove_widget(draggable)
+
+
 class ChooseContainerScreen(Screen):
     question = ObjectProperty(None)
     isCorrect = NumericProperty(-1)
@@ -65,11 +68,11 @@ class ChooseContainerScreen(Screen):
         self.sm.next_question()
 
     def correct_answer_drop(self):
-        self.remainingAnswers-=1
-        if self.remainingAnswers==0:
+        self.remainingAnswers -= 1
+        if self.remainingAnswers == 0:
             self.finalize_answer()
 
-    def finalize_answer(self,*args):
+    def finalize_answer(self, *args):
         if self.time == 0:
             self.ids.after_answer_label.text = "Time's up!"
             self.ids.after_answer_label.color = (1, 0, 0, 1)
@@ -88,7 +91,7 @@ class ChooseContainerScreen(Screen):
             self.interval.cancel()
             Clock.schedule_once(self.next_question_callback, 2)
 
-    def update_time(self,dt):
+    def update_time(self, dt):
         self.time -= 1
         self.ids.remaining_time.text = "Remaining time: " + str(self.time)
         if self.time == 0:
@@ -110,7 +113,7 @@ class ChooseContainerScreen(Screen):
         self.ids.answer_grid.clear_widgets()
         for i, text in enumerate(self.question['containers']):
             self.ids.answer_destination_fields.add_widget(
-                Container(answer_option=i, text=text,parentObject=self)
+                Container(answer_option=i, text=text, parentObject=self)
             )
         for answer in self.question['answers']:
             self.ids.answer_grid.add_widget(
