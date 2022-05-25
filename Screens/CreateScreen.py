@@ -14,7 +14,7 @@ class CreateScreen(Screen):
     def __init__(self, sm, **kwargs):
         super(CreateScreen, self).__init__(**kwargs)
         self.sm = sm
-        self.question_types = ["chooseOne", "correctOrder"]
+        self.question_types = ["chooseOne", "correctOrder","chooseContainer"]
         self.quiz = Quiz()
         self.question = None
         self.stage = 1
@@ -46,16 +46,22 @@ class CreateScreen(Screen):
         self.stage = 2
         self.sm.current_screen.ids.optionsGrid.clear_widgets()
         self.sm.current_screen.ids.optionsGrid.size_hint = 1, 1
+
         self.sm.current_screen.ids.message_to_user.text = "Write name of the quiz"
         text_input = TextInput(hint_text="Name", size_hint=(1, 1))
         self.sm.current_screen.ids["quiz_name"] = text_input
+        self.sm.current_screen.ids.optionsGrid.cols = 1
+        self.sm.current_screen.ids.optionsGrid.rows = 2
         self.sm.current_screen.ids.optionsGrid.add_widget(text_input)
         self.sm.current_screen.ids.optionsGrid.add_widget(
             Button(text="NEXT", size_hint=(1, 1), on_press=self.set_quiz_name))
 
     def set_quiz_name(self, button):
+
         name = self.sm.current_screen.ids.quiz_name.text
         if name != "":
+            self.sm.current_screen.ids.optionsGrid.cols = 2
+            self.sm.current_screen.ids.optionsGrid.rows = None
             self.quiz.name = name
             self.choose_question_type()
 
