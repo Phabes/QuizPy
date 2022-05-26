@@ -2,9 +2,9 @@ from kivy.uix.button import Button
 from Models.Question import Question
 
 
-class CorrectOrderType(Question):
+class ChooseContainerType(Question):
     def __init__(self):
-        super(CorrectOrderType, self).__init__()
+        super(ChooseContainerType, self).__init__()
         self.correct = []
 
     def create_choose_correct_answer(self, ids, answers, fun):

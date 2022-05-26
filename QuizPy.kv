@@ -15,10 +15,12 @@
     size_hint: 1, None
     height: 400
     on_press: root.click()
+    
 
 <CreateScreen>
     BoxLayout:
         orientation: "vertical"
+        id:screen_box
         size: root.width, root.height
         BoxLayout:
             orientation: "horizontal"
@@ -41,21 +43,23 @@
                         size_hint: 0.5, 0.8
                         pos_hint: {"center_y": 0.5}
                         on_press: root.cancel_creating()
-        Label:
-            id: message_to_user
-            size_hint: 1, None
-            height: 80
-        ScrollView:
-            id: scroll_view
-            size_hint: 1, None
-            height: root.height - 160
-            scroll_wheel_distance: 80
-            GridLayout:
-                id: optionsGrid
-                cols: 2
+        BoxLayout:
+            orientation:'vertical'
+            id:screen_content_box
+            Label:
+                id: message_to_user
                 size_hint: 1, None
-                height: self.minimum_height
-
+                height: 80
+            ScrollView:
+                id: scroll_view
+                size_hint: 1, None
+                height: root.height - 160
+                scroll_wheel_distance: 80
+                GridLayout:
+                    id: optionsGrid
+                    cols: 2
+                    size_hint: 1, None
+                    height: self.minimum_height
 <StartScreen>
     BoxLayout:
         orientation: "vertical"
@@ -647,6 +651,36 @@
                 background_color:"#00ff00" if root.isCorrect==3 else ( "#ff0000" if root.isCorrect>=0 else "#AAAAAA" )
                 text: "[Error]"
 
+<RankingLabel>:
+    orientation:"horizontal"
+    size_hint: 1, None
+    height: 100
+    Label:
+        id:position_label
+        text:root.position
+    Label:
+        id:username_label
+        text:root.username
+    Label:
+        id:score_label
+        text:root.score
+<RankingScreen>
+    BoxLayout:
+        orientation:"vertical"
+        Label:
+            text:"Ranking"
+        BoxLayout:
+            orientaion:"horizontal"
+            Label:
+                text:"Your score: "
+            Label:
+                id:user_score
+                text:"[ERROR]"
+        BoxLayout:
+            orientation:"vertical"
+            id:ranking_box
+        
+
 
 <LoginScreen>
     BoxLayout:
@@ -712,7 +746,7 @@
                         font_size: 20
                         focus: True
                         multiline: False
-                    TextInput
+                    TextInput:
                         id: password_input
                         hint_text: "password"
                         password: True
@@ -720,7 +754,7 @@
                         height: 40
                         font_size: 20
                         multiline: False
-                    TextInput
+                    TextInput:
                         id: confirm_password_input
                         hint_text: "password"
                         password: True

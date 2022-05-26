@@ -7,14 +7,20 @@ from Buttons.CreateCategoryButton import CreateCategory
 from DatabaseManagement import connection
 from Models.ChooseOneType import ChooseOneType
 from Models.CorrectOrderType import CorrectOrderType
+from Models.ChooseContainerType import ChooseContainerType
 from Models.Quiz import Quiz
+from kivy.uix.boxlayout import BoxLayout
+
+
+class BasicCreationType(BoxLayout):
+    pass
 
 
 class CreateScreen(Screen):
     def __init__(self, sm, **kwargs):
         super(CreateScreen, self).__init__(**kwargs)
         self.sm = sm
-        self.question_types = ["chooseOne", "correctOrder","chooseContainer"]
+        self.question_types = ["chooseOne", "correctOrder", "chooseContainer"]
         self.quiz = Quiz()
         self.question = None
         self.stage = 1
@@ -81,6 +87,8 @@ class CreateScreen(Screen):
             self.question = ChooseOneType()
         elif question_type == "correctOrder":
             self.question = CorrectOrderType()
+        elif question_type == "chooseContainer":
+            self.question = ChooseContainerType()
         self.question.type = question_type
         self.stage = 4
         self.sm.current_screen.ids.message_to_user.text = "Write your question"

@@ -50,13 +50,12 @@ class Manager(ScreenManager):
 
     def next_question(self):
         self.current_question_id += 1
-        print(self, self.current_question_id, self.current_quiz["questions"])
         if self.current_question_id >= len(self.current_quiz["questions"]):
             connection.save_score(self.current_quiz["_id"], self.points)
-            ranking = connection.find_k_best_results(self.current_quiz["_id"], 10)
-            for document in ranking:
-                print(document["results"])
-            self.current = "category"
+            ranking = connection.find_k_best_results(self.current_quiz["_id"], 5)
+            self.current = "ranking"
+            self.current_screen.update_ranking(ranking)
+            self.current_screen.set_user_score(self.points)
             self.current_question_id = -1
             self.current_quiz = None
         else:

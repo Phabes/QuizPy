@@ -9,6 +9,7 @@ from Screens.LoginScreen import LoginScreen
 from Screens.RegisterScreen import RegisterScreen
 from Screens.CreateScreen import CreateScreen
 from Screens.Manager import Manager
+from Screens.RankingScreen import RankingScreen
 
 sm = Manager()
 
@@ -24,6 +25,7 @@ class QuizPyApp(App):
         sm.add_widget(CorrectOrderScreen(sm, name="correctOrder"))
         sm.add_widget(ChooseContainerScreen(sm, name="chooseContainer"))
         sm.add_widget(CreateScreen(sm, name="create"))
+        sm.add_widget(RankingScreen(sm, name="ranking"))
         return sm
 
 

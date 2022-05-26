@@ -32,36 +32,6 @@ class AnswerBox(KXDroppableBehavior, BoxLayout):
 class ReordableBoxLayout(KXReorderableBehavior, BoxLayout):
     pass
 
-
-# class DraggableLabel(DragBehavior,Label):
-#         dragging = BooleanProperty(False)
-#         original_pos = ListProperty()
-#
-#         def on_touch_down(self, touch):
-#             if self.collide_point(*touch.pos):
-#                 print('on touch down')
-#                 self.original_pos = self.pos
-#             return super().on_touch_down(touch)
-#
-#         def on_touch_move(self, touch):
-#             if touch.grab_current is self:
-#                 self.opacity = 0.4
-#                 self.dragging = True
-#             return super().on_touch_move(touch)
-#
-#         def on_touch_up(self, touch):
-#             if self.dragging:
-#                 self.opacity = 1
-#                 self.dragging = False
-#                 if self.collide_widget(self.parent):
-#                     # self.parent.remove_widget(self)
-#                     pass
-#                 else:
-#                     anim = Animation(pos=self.original_pos, duration=1)
-#                     anim.start(self)
-#             return super().on_touch_up(touch)
-
-
 class CorrectOrderScreen(Screen):
     question = ObjectProperty(None)
     isCorrect = NumericProperty(-1)
