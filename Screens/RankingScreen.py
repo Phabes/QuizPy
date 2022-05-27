@@ -8,17 +8,6 @@ class RankingLabel(BoxLayout):
     position = StringProperty()
     username = StringProperty()
     score = StringProperty()
-    #
-    # def get_username(self):
-    #     print(self.rank["username"])
-    #     return self.rank["username"]
-    #
-    # def get_points(self):
-    #     print(self.rank["points"])
-    #     return self.rank["points"]
-    #
-    # def get_position(self):
-    #     return str(self.position)
 
 
 class RankingScreen(Screen):
@@ -29,8 +18,11 @@ class RankingScreen(Screen):
         self.sm = sm
 
     def update_ranking(self, ranking):
+
         self.ids.ranking_box.clear_widgets()
         i = 0
+        self.ids.ranking_box.add_widget(
+            RankingLabel(username="Username", score="Score", position="Position"))
         for document in ranking:
             i += 1
             self.ids.ranking_box.add_widget(

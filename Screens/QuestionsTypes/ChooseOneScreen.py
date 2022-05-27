@@ -20,6 +20,7 @@ class ChooseOneScreen(Screen):
 
     def next_question_callback(self, dt):
         self.block = False
+        self.ids.back_button.disabled=False
         self.sm.next_question()
 
     # def small_change(self, step, maxi, interval):
@@ -38,6 +39,7 @@ class ChooseOneScreen(Screen):
     #     interval = Clock.schedule_interval(lambda x: self.small_change(step, maxi, interval), 1 / 100)
 
     def finalize_answer(self, *args):
+        self.ids.back_button.disabled=True
         if not self.block:
             self.sm.set_time_end()
             if not self.ids.after_answer_label.visible:

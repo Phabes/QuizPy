@@ -65,6 +65,7 @@ class ChooseContainerScreen(Screen):
                 element = box.children[0]
                 box.clear_widgets()
                 self.ids.answer_grid.add_widget(element)
+        self.ids.back_button.disabled = False
         self.sm.next_question()
 
     def correct_answer_drop(self):
@@ -73,6 +74,7 @@ class ChooseContainerScreen(Screen):
             self.finalize_answer()
 
     def finalize_answer(self, *args):
+        self.ids.back_button.disabled=True
         if self.time == 0:
             self.ids.after_answer_label.text = "Time's up!"
             self.ids.after_answer_label.color = (1, 0, 0, 1)

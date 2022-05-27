@@ -7,12 +7,13 @@ from Buttons.CreateCategoryButton import CreateCategory
 from DatabaseManagement import connection
 from Models.ChooseOneType import ChooseOneType
 from Models.CorrectOrderType import CorrectOrderType
-from Models.ChooseContainerType import ChooseContainerType
+from Models.ChooseContainerType import ChooseContainerType,ContainerTypeCheckboxes,AllContainersBox
+
 from Models.Quiz import Quiz
 from kivy.uix.boxlayout import BoxLayout
 
 
-class BasicCreationType(BoxLayout):
+class BasicQuestionCreator(BoxLayout):
     pass
 
 
@@ -105,17 +106,25 @@ class CreateScreen(Screen):
         if question != "":
             self.sm.current_screen.ids.optionsGrid.clear_widgets()
             self.sm.current_screen.ids.message_to_user.text = "Write your answers"
-            self.stage = 5
-            self.question.question = question
-            for i in range(1, self.number_of_answers):
-                label = Label(text="Answer " + str(i) + " -->")
-                self.sm.current_screen.ids.optionsGrid.add_widget(label)
-                text_input = TextInput(hint_text="Answer " + str(i), size_hint=(1, 1))
-                self.ids["answer" + str(i)] = text_input
-                self.sm.current_screen.ids.optionsGrid.add_widget(text_input)
-            self.sm.current_screen.ids.optionsGrid.add_widget(Label(text="Ready answers? --> "))
+            if self.question.type!="chooseContainer":
+                self.stage = 5
+                self.question.question = question
+                for i in range(1, self.number_of_answers):
+                    label = Label(text="Answer " + str(i) + " -->")
+                    self.sm.current_screen.ids.optionsGrid.add_widget(label)
+                    text_input = TextInput(hint_text="Answer " + str(i), size_hint=(1, 1))
+                    self.ids["answer" + str(i)] = text_input
+                    self.sm.current_screen.ids.optionsGrid.add_widget(text_input)
+                self.sm.current_screen.ids.optionsGrid.add_widget(Label(text="Ready answers? --> "))
+            elif self.question.type=="chooseContainer":
+                self.sm.current_screen.ids.optionsGrid.size_hint=(1,1)
+                self.sm.current_screen.ids.optionsGrid.cols=1
+                self.sm.current_screen.ids.optionsGrid.rows = None
+                all_containers_box=AllContainersBox()
+                self.sm.current_screen.ids.optionsGrid.add_widget(ContainerTypeCheckboxes(all_containers_box=all_containers_box))
+                self.sm.current_screen.ids.optionsGrid.add_widget(all_containers_box)
             self.sm.current_screen.ids.optionsGrid.add_widget(
-                Button(text="NEXT", size_hint=(1, 1), on_press=self.set_answers))
+                Button(text="NEXT", size_hint=(1, 0.2), on_press=self.set_answers))
 
     def set_answers(self, button):
         ok = True

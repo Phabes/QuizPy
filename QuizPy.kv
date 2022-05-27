@@ -3,20 +3,103 @@
 
 <CategoryButton>:
     size_hint: 1, None
-    height: 400
+    height: 200
     on_press: root.click()
 
 <CreateCategory>:
     size_hint: 1, None
-    height: 400
+    height: 200
     on_press: root.click()
 
 <QuizButton>:
     size_hint: 1, None
-    height: 400
+    height: 200
     on_press: root.click()
-    
+<AllContainersBox>:
+    orientation:'horizontal'
+    id:all_container_box
+    padding:5
+<NewContainerBox>:
+    orientation:'vertical'
+    size_hint_y:1
+    canvas.before:
+        Color:
+            rgba:rgba('#AAAAAA')
+        Line:
+            rectangle:[*self.pos,*self.size,]
+    TextInput:
+        id: container_name
+        hint_text: "Name"
+        size_hint: 1, None
+        height: 40
+        font_size: 20
+        focus: True
+        multiline: False
+    BoxLayout:
+        orientation:'vertical'
+        id:answers_box
+    Button:
+        size_hint:1,0.1
+        id:add_answer_but
+        text:"+"
+        on_press:root.add_answer()
 
+<ContainerAnswerType>:
+    orientation:'horizontal'
+    TextInput:
+        size_hint:0.8,None
+        id: container_answer
+        hint_text: "Answer"
+        size_hint: 1, None
+        height: 40
+        font_size: 20
+        focus: True
+        multiline: False
+    Button:
+        size_hint:0.2,None
+        height: 40
+        text:"-"
+        id:remove_answer_but
+        on_press:root.remove_answer()
+<ContainerTypeCheckboxes>:
+    orientation:'horizontal'
+    size_hint:1,0.1
+    canvas.before:
+        Color:
+            rgba:rgba('#AAAAAA')
+        Line:
+            rectangle:[*self.pos,*self.size,]
+    BoxLayout:
+        orientation:'horizontal'
+        Label:
+            text_size: self.size
+            halign: 'right'
+            valign: 'middle'
+            text:"2"
+        CheckBox:
+            group:"container_num"
+            on_active:root.checkbox_choose(self,self.active,2)
+    BoxLayout:
+        orientation:'horizontal'
+        Label:
+            text_size: self.size
+            halign: 'right'
+            valign: 'middle'
+            text:"3"
+        CheckBox:
+            group:"container_num"
+            on_active:root.checkbox_choose(self,self.active,3)
+    BoxLayout:
+        orientation:'horizontal'
+        Label:
+            text_size: self.size
+            halign: 'right'
+            valign: 'middle'
+            text:"4"
+        CheckBox:
+            group:"container_num"
+            on_active:root.checkbox_choose(self,self.active,4)
+    
 <CreateScreen>
     BoxLayout:
         orientation: "vertical"
@@ -651,35 +734,108 @@
                 background_color:"#00ff00" if root.isCorrect==3 else ( "#ff0000" if root.isCorrect>=0 else "#AAAAAA" )
                 text: "[Error]"
 
-<RankingLabel>:
-    orientation:"horizontal"
-    size_hint: 1, None
-    height: 100
-    Label:
-        id:position_label
-        text:root.position
-    Label:
-        id:username_label
-        text:root.username
-    Label:
-        id:score_label
-        text:root.score
+
 <RankingScreen>
     BoxLayout:
         orientation:"vertical"
+        size:root.size
+        spacing:10
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: 1,None
+            height: 80
+            padding:10
+            AnchorLayout:
+                anchor_x: "left"
+                size_hint: 0.5, 1
+                BoxLayout:
+                    size_hint: 1, 1
+                    Button:
+                        id: back_button
+                        text: "EXIT"
+                        size_hint: 0.5, 0.8
+                        pos_hint: {"center_y": 0.5}
+                    BoxLayout:
+                        size_hint: 0.5, 0.8
+                        pos_hint: {"center_y": 0.5}
+                        Label:
+                            id: user_hello
+                            size_hint: 1, 1
+            AnchorLayout:
+                anchor_x: "right"
+                size_hint: 0.5, 1
+                BoxLayout:
+                    orientation: "horizontal"
+                    size_hint: 0.5,1
+                    Button:
+                        text: "CREATE QUIZ"
+                        size_hint: 0.5, 0.8
+                        pos_hint: {"center_y": 0.5}
+                        on_press: root.manager.create_quiz()
+                    Button:
+                        text: "LOGOUT"
+                        size_hint: 0.5, 0.8
+                        pos_hint: {"center_y": 0.5}
+                        on_press: root.manager.logout_user()
         Label:
             text:"Ranking"
+            size_hint:(1,.1)
+            font_size:self.width/18
         BoxLayout:
             orientaion:"horizontal"
+            size_hint:(1,.1)
+            padding:[10,0]
+            
             Label:
                 text:"Your score: "
+                font_size:self.width/20
             Label:
                 id:user_score
                 text:"[ERROR]"
+                font_size:self.width/15
+                canvas.before:
+                    Color:
+                        rgba:rgba("#7FFFD4")
+                    Line:
+                        rectangle:[*self.pos,*self.size,]
+             
         BoxLayout:
             orientation:"vertical"
+            size_hint:(1,.5)
             id:ranking_box
+            
+<RankingLabel>:
+    orientation:"horizontal"
+    padding:[10,0]
+    Label:
+        font_size:root.width/25
+        id:position_label
+        text:root.position
+        canvas.before:
+            Color:
+                rgba:rgba("#AAAAAA")
+            Line:
+                rectangle:[*self.pos,*self.size,]
+    Label:
+        id:username_label
+        text:root.username
+        font_size:root.width/25
+        canvas.before:
+            Color:
+                rgba:rgba("#AAAAAA")
+            Line:
+                rectangle:[*self.pos,*self.size,]
         
+    Label:
+        id:score_label
+        text:root.score 
+        font_size:root.width/25
+        canvas.before:
+            Color:
+                rgba:rgba("#AAAAAA")
+            Line:
+                rectangle:[*self.pos,*self.size,]
+          
 
 
 <LoginScreen>
