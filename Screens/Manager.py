@@ -33,7 +33,7 @@ class Manager(ScreenManager):
 
     def logout_user(self):
         if connection.logout_user():
-            self.exit_quiz()
+            self.exit_ranking("logout")
             self.current = "login"
 
     def start_quiz(self, quiz):

@@ -73,6 +73,7 @@ class CorrectOrderScreen(Screen):
         else:
             self.check_fill()
             if not self.isFilled:
+                self.ids.back_button.disabled=False
                 self.ids.submit.background_color = "#f5425d"
             else:
                 self.sm.set_time_end()

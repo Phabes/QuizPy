@@ -7,7 +7,7 @@ from Buttons.CreateCategoryButton import CreateCategory
 from DatabaseManagement import connection
 from Models.ChooseOneType import ChooseOneType
 from Models.CorrectOrderType import CorrectOrderType
-from Models.ChooseContainerType import ChooseContainerType,ContainerTypeCheckboxes,AllContainersBox
+from Models.ChooseContainerType import ChooseContainerType, ContainerTypeCheckboxes, AllContainersBox
 
 from Models.Quiz import Quiz
 from kivy.uix.boxlayout import BoxLayout
@@ -106,7 +106,7 @@ class CreateScreen(Screen):
         if question != "":
             self.sm.current_screen.ids.optionsGrid.clear_widgets()
             self.sm.current_screen.ids.message_to_user.text = "Write your answers"
-            if self.question.type!="chooseContainer":
+            if self.question.type == "correctOrder" or self.question.type == "chooseOne":
                 self.stage = 5
                 self.question.question = question
                 for i in range(1, self.number_of_answers):
@@ -116,17 +116,60 @@ class CreateScreen(Screen):
                     self.ids["answer" + str(i)] = text_input
                     self.sm.current_screen.ids.optionsGrid.add_widget(text_input)
                 self.sm.current_screen.ids.optionsGrid.add_widget(Label(text="Ready answers? --> "))
-            elif self.question.type=="chooseContainer":
-                self.sm.current_screen.ids.optionsGrid.size_hint=(1,1)
-                self.sm.current_screen.ids.optionsGrid.cols=1
+                self.sm.current_screen.ids.optionsGrid.add_widget(
+                    Button(text="NEXT", size_hint=(1, 0.2), on_press=self.set_answers_basic))
+            elif self.question.type == "chooseContainer":
+                self.sm.current_screen.ids.optionsGrid.size_hint = (1, 1)
+                self.sm.current_screen.ids.optionsGrid.cols = 1
                 self.sm.current_screen.ids.optionsGrid.rows = None
-                all_containers_box=AllContainersBox()
-                self.sm.current_screen.ids.optionsGrid.add_widget(ContainerTypeCheckboxes(all_containers_box=all_containers_box))
-                self.sm.current_screen.ids.optionsGrid.add_widget(all_containers_box)
-            self.sm.current_screen.ids.optionsGrid.add_widget(
-                Button(text="NEXT", size_hint=(1, 0.2), on_press=self.set_answers))
-
-    def set_answers(self, button):
+                self.all_containers_box = AllContainersBox()
+                self.sm.current_screen.ids.optionsGrid.add_widget(
+                    ContainerTypeCheckboxes(all_containers_box=self.all_containers_box))
+                self.sm.current_screen.ids.optionsGrid.add_widget(self.all_containers_box)
+                self.sm.current_screen.ids.optionsGrid.add_widget(
+                    Button(text="NEXT", size_hint=(1, 0.2), on_press=self.set_answers_container))
+    def set_answers_container(self,arg):
+        if self.validate_containters_input(self.all_containers_box):
+            print("GIT")
+        else:
+            print("NOT GIT")
+    def validate_containters_input(self,object):
+        print("\nPARENT: ",object)
+        print(object.children)
+        for el in object.children:
+            print("Child: ",el)
+            if isinstance(el,TextInput):
+                print("TEXTFIELD")
+                if el.text=="":
+                    return False
+                else:
+                    return True
+            elif el.children:
+                if not self.validate_containters_input(el):
+                    return False
+            else:
+                return True
+        return False
+        # if object.children:
+        #     print("A1",object)
+        #     var=True
+        #     for el in object.children:
+        #         print("child",el)
+        #         x=self.validate_containters_input(el)
+        #         print("x",x)
+        #         if not x:
+        #             return False
+        #     return var
+        # elif isinstance(object,TextInput):
+        #     print("solo",object)
+        #     if object.text=='':
+        #         return False
+        #     else:
+        #         return True
+        # else:
+        #     print(object)
+        #     return False
+    def set_answers_basic(self, button):
         ok = True
         # for i in range(1, 5):
         #     answer = self.sm.current_screen.ids["answer" + str(i)].text
