@@ -20,24 +20,11 @@ class ChooseOneScreen(Screen):
 
     def next_question_callback(self, dt):
         self.block = False
+        self.ids.back_button.disabled = False
         self.sm.next_question()
 
-    # def small_change(self, step, maxi, interval):
-    #     if step + self.sm.points >= maxi:
-    #         interval.cancel()
-    #         self.sm.set_points(maxi)
-    #         self.ids.user_points.text = "Points: " + str(maxi)
-    #     else:
-    #         self.sm.add_points(step)
-    #         self.ids.user_points.text = "Points: " + str(self.sm.points)
-    #
-    # def smooth_change_points(self, old_points, to_add):
-    #     maxi = old_points + to_add
-    #     diff = to_add
-    #     step = diff // 100
-    #     interval = Clock.schedule_interval(lambda x: self.small_change(step, maxi, interval), 1 / 100)
-
     def finalize_answer(self, *args):
+        self.ids.back_button.disabled = True
         if not self.block:
             self.sm.set_time_end()
             if not self.ids.after_answer_label.visible:

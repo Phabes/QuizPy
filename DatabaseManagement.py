@@ -72,8 +72,7 @@ class Connection:
         return True
 
     def save_quiz(self, quiz):
-        # quiz_obj = json.dumps(quiz.__dict__)
-        quiz_obj = quiz.toJSON()
+        quiz_obj = quiz.to_json()
         quiz_obj = json.loads(quiz_obj)
         a = self.db.Quizes.insert_one(quiz_obj)
         if a:

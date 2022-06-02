@@ -13,14 +13,11 @@ class LoginScreen(Screen):
     def login_button_click(self):
         login = self.ids.login_input.text
         password = self.ids.password_input.text
-        # login = self.l
-        # password = self.p
         if not connection.check_if_user_exist(login):
             print("USER", login, "DOESNT EXIST")
         else:
             logged = connection.login_user(login, password)
             if logged:
-                # print("SUCCESS")
                 self.ids.login_input.text = ""
                 self.ids.password_input.text = ""
                 self.sm.current = "start"

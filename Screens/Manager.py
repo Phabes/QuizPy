@@ -4,7 +4,7 @@ from kivy.uix.label import Label
 from kivy.uix.screenmanager import ScreenManager
 from kivy.properties import ObjectProperty, Clock
 from kivy.properties import NumericProperty
-
+from random import shuffle
 from DatabaseManagement import connection
 
 
@@ -33,7 +33,7 @@ class Manager(ScreenManager):
 
     def logout_user(self):
         if connection.logout_user():
-            self.exit_quiz()
+            self.exit_ranking("logout")
             self.current = "login"
 
     def start_quiz(self, quiz):
@@ -41,28 +41,39 @@ class Manager(ScreenManager):
         self.points = 0
         self.get_screen("chooseOne").ids.user_points.text = "Points: 0"
         self.get_screen("correctOrder").ids.user_points.text = "Points: 0"
+        shuffle(self.current_quiz["questions"])
         self.next_question()
 
-    def exit_quiz(self):
+    def exit_quiz(self,arg):
         self.current_quiz = None
         self.current_question_id = -1
+        self.points=0
+        self.time_start = None
+        self.time_end = None
+        self.multiply = 1
+        self.current_screen.interval.cancel()
         self.current = "category"
-
+    def exit_ranking(self,arg):
+        self.current_question_id = -1
+        self.current_quiz = None
+        self.current = "category"
     def next_question(self):
         self.current_question_id += 1
-        print(self, self.current_question_id, self.current_quiz["questions"])
         if self.current_question_id >= len(self.current_quiz["questions"]):
             connection.save_score(self.current_quiz["_id"], self.points)
-            ranking = connection.find_k_best_results(self.current_quiz["_id"], 10)
-            for document in ranking:
-                print(document["results"])
-            self.current = "category"
-            self.current_question_id = -1
-            self.current_quiz = None
+            ranking = connection.find_k_best_results(self.current_quiz["_id"], 5)
+            self.current = "ranking"
+            self.current_screen.ids.back_button.funbind("on_press", self.exit_quiz)
+            self.current_screen.ids.back_button.fbind("on_press", self.exit_ranking)
+            self.current_screen.update_ranking(ranking)
+            self.current_screen.set_user_score(self.points)
         else:
             current_question = self.current_quiz["questions"][self.current_question_id]
             self.current = current_question["type"]
             self.current_screen.update_data(current_question)
+            self.current_screen.ids.back_button.funbind("on_press", self.exit_quiz)
+            self.current_screen.ids.back_button.fbind("on_press", self.exit_quiz)
+
 
     def set_time_start(self):
         self.time_start = time.time()

@@ -1,9 +1,9 @@
 from kivy.uix.button import Button
 
-from Models.Question import Question
+from Models.Question import BasicQuestion
 
 
-class ChooseOneType(Question):
+class ChooseOneType(BasicQuestion):
     def __init__(self):
         super(ChooseOneType, self).__init__()
         self.correct = None

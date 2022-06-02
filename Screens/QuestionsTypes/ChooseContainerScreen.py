@@ -1,6 +1,6 @@
 from random import shuffle
 
-from kivy.properties import ObjectProperty, NumericProperty, BooleanProperty, StringProperty
+from kivy.properties import ObjectProperty, NumericProperty, StringProperty
 from kivy.uix.screenmanager import Screen
 from kivy.uix.label import Label
 from kivy.uix.boxlayout import BoxLayout
@@ -33,7 +33,7 @@ class CategoryBox(KXDroppableBehavior, BoxLayout):
         return super().add_widget(widget)
 
     def accepts_drag(self, touch, draggable):
-        if (self.answer_option == draggable.answer_option):
+        if self.answer_option == draggable.answer_option:
             self.parentObject.correct_answer_drop()
             draggable.parent.remove_widget(draggable)
             self.add_widget(draggable)
@@ -65,6 +65,7 @@ class ChooseContainerScreen(Screen):
                 element = box.children[0]
                 box.clear_widgets()
                 self.ids.answer_grid.add_widget(element)
+        self.ids.back_button.disabled = False
         self.sm.next_question()
 
     def correct_answer_drop(self):
@@ -73,6 +74,7 @@ class ChooseContainerScreen(Screen):
             self.finalize_answer()
 
     def finalize_answer(self, *args):
+        self.ids.back_button.disabled = True
         if self.time == 0:
             self.ids.after_answer_label.text = "Time's up!"
             self.ids.after_answer_label.color = (1, 0, 0, 1)
@@ -109,17 +111,13 @@ class ChooseContainerScreen(Screen):
         self.ids.main_question.text = question['question']
         shuffle(self.question['answers'])
         self.remainingAnswers = len(self.question['answers'])
-        for child in self.ids.answer_destination_fields.children:
-            self.ids.answer_destination_fields.remove_widget(child)
-        for child in self.ids.answer_grid.children:
-            self.ids.answer_grid.remove_widget(child)
-
+        self.ids.answer_destination_fields.clear_widgets()
+        self.ids.answer_grid.clear_widgets()
         for i, text in enumerate(self.question['containers']):
             self.ids.answer_destination_fields.add_widget(
                 Container(answer_option=i, text=text, parentObject=self)
             )
         for answer in self.question['answers']:
-            print(answer)
             self.ids.answer_grid.add_widget(
                 DraggableLabel(answer_option=answer['container_id'], text=answer['text'])
             )
