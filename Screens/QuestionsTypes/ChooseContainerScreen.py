@@ -1,6 +1,6 @@
 from random import shuffle
 
-from kivy.properties import ObjectProperty, NumericProperty, BooleanProperty, StringProperty
+from kivy.properties import ObjectProperty, NumericProperty, StringProperty
 from kivy.uix.screenmanager import Screen
 from kivy.uix.label import Label
 from kivy.uix.boxlayout import BoxLayout
@@ -33,7 +33,7 @@ class CategoryBox(KXDroppableBehavior, BoxLayout):
         return super().add_widget(widget)
 
     def accepts_drag(self, touch, draggable):
-        if (self.answer_option == draggable.answer_option):
+        if self.answer_option == draggable.answer_option:
             self.parentObject.correct_answer_drop()
             draggable.parent.remove_widget(draggable)
             self.add_widget(draggable)
@@ -74,7 +74,7 @@ class ChooseContainerScreen(Screen):
             self.finalize_answer()
 
     def finalize_answer(self, *args):
-        self.ids.back_button.disabled=True
+        self.ids.back_button.disabled = True
         if self.time == 0:
             self.ids.after_answer_label.text = "Time's up!"
             self.ids.after_answer_label.color = (1, 0, 0, 1)

@@ -12,5 +12,5 @@ class Quiz:
     def set_username(self, username):
         self.username = username
 
-    def toJSON(self):
+    def to_json(self):
         return json.dumps(self, default=lambda o: o.__dict__)

@@ -28,7 +28,6 @@ class RankingScreen(Screen):
             self.ids.ranking_box.add_widget(
                 RankingLabel(username=document["results"]["username"], score=str(document["results"]["points"]),
                              position=str(i)))
-            print(document["results"])
 
     def set_user_score(self, score):
         self.user_score = score

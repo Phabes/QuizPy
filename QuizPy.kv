@@ -312,6 +312,7 @@
     drag_timeout:0
     font_size:'40sp'
     text: self.text
+    font_size:self.width/7
     canvas.before:
         Color:
             rgba:rgba("#7FFFD4") if self.is_being_dragged else rgba("#40E0D0")
@@ -443,6 +444,7 @@
             id:answer_destination_fields
         GridLayout:
             id:answer_grid
+            height:root.width/2
             cols:3
             padding:20
             spacing:20
@@ -451,6 +453,7 @@
     drag_cls:'answer'
     drag_classes:['answer',]
     parentObject:root.parentObject
+    font_size:self.width/7
     canvas.before:
         Color:
             rgba:rgba('#AAAAAA')

@@ -1,8 +1,8 @@
 from kivy.uix.button import Button
-from Models.Question import Question
+from Models.Question import BasicQuestion
 
 
-class CorrectOrderType(Question):
+class CorrectOrderType(BasicQuestion):
     def __init__(self):
         super(CorrectOrderType, self).__init__()
         self.correct = []

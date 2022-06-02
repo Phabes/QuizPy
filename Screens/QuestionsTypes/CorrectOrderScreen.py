@@ -32,6 +32,7 @@ class AnswerBox(KXDroppableBehavior, BoxLayout):
 class ReordableBoxLayout(KXReorderableBehavior, BoxLayout):
     pass
 
+
 class CorrectOrderScreen(Screen):
     question = ObjectProperty(None)
     isCorrect = NumericProperty(-1)
@@ -50,7 +51,7 @@ class CorrectOrderScreen(Screen):
     def next_question_callback(self, dt):
         self.ids.answer_destination_fields.clear_widgets()
         self.ids.answer_grid.clear_widgets()
-        self.ids.back_button.disabled=False
+        self.ids.back_button.disabled = False
         self.sm.next_question()
 
     def check_fill(self):
@@ -62,7 +63,7 @@ class CorrectOrderScreen(Screen):
         # self.ids.submit.disabled = not self.isFilled
 
     def finalize_answer(self, *args):
-        self.ids.back_button.disabled=True
+        self.ids.back_button.disabled = True
         if self.time == 0:
             self.ids.after_answer_label.text = "Time's up!"
             self.ids.after_answer_label.color = (1, 0, 0, 1)
@@ -73,7 +74,7 @@ class CorrectOrderScreen(Screen):
         else:
             self.check_fill()
             if not self.isFilled:
-                self.ids.back_button.disabled=False
+                self.ids.back_button.disabled = False
                 self.ids.submit.background_color = "#f5425d"
             else:
                 self.sm.set_time_end()

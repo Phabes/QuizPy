@@ -45,7 +45,6 @@ class Manager(ScreenManager):
         self.next_question()
 
     def exit_quiz(self,arg):
-        print("XDDD")
         self.current_quiz = None
         self.current_question_id = -1
         self.points=0
