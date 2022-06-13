@@ -58,7 +58,6 @@ class Connection:
         return False
 
     def login_user(self, username, password):
-        print(username, password)
         user = self.db.Users.find_one({"username": username})
         if user:
             if bcrypt.checkpw(password.encode("utf-8"), user["password"]):

@@ -139,7 +139,7 @@
                 height: root.height - 160
                 scroll_wheel_distance: 80
                 GridLayout:
-                    id: optionsGrid
+                    id: options_grid
                     cols: 2
                     size_hint: 1, None
                     height: self.minimum_height
@@ -334,7 +334,7 @@
         drag_cls:'answer'
         drag_classes:['answer',]
         answer_option:root.answer_option
-        parentObject:root.parentObject
+        parent_object:root.parent_object
         canvas.before:
             Color:
                 rgba:rgba('#AAAAAA')
@@ -452,7 +452,7 @@
 <AnswerBox>:
     drag_cls:'answer'
     drag_classes:['answer',]
-    parentObject:root.parentObject
+    parent_object:root.parent_object
     font_size:self.width/7
     canvas.before:
         Color:
@@ -463,7 +463,7 @@
     drag_cls:'answer'
     drag_timeout:0
     font_size:'40sp'
-    background_color:"#00ff00" #if self.isCorrect==0 else ( "#ff0000" if self.isCorrect>=0 else "#AAAAAA" )
+    background_color:"#00ff00" #if self.is_correct==0 else ( "#ff0000" if self.is_correct>=0 else "#AAAAAA" )
     text: self.text
     canvas.before:
         Color:
@@ -710,7 +710,7 @@
                 center_x: root.width*1/4
                 center_y:root.height*5/10
                 on_press:root.finalize_answer(0)
-                background_color:"#00ff00" if root.isCorrect==0 else ( "#ff0000" if root.isCorrect>=0 else "#AAAAAA" )
+                background_color:"#00ff00" if root.is_correct==0 else ( "#ff0000" if root.is_correct>=0 else "#AAAAAA" )
                 text: "[Error]"
             Button:
                 id: secondAnswer
@@ -718,7 +718,7 @@
                 center_x: root.width*3/4
                 center_y:root.height*5/10
                 on_press:root.finalize_answer(1)
-                background_color:"#00ff00" if root.isCorrect==1 else ( "#ff0000" if root.isCorrect>=0 else "#AAAAAA" )
+                background_color:"#00ff00" if root.is_correct==1 else ( "#ff0000" if root.is_correct>=0 else "#AAAAAA" )
                 text: "[Error]"
             Button:
                 id: thirdAnswer
@@ -726,7 +726,7 @@
                 center_x: root.width*1/4
                 center_y:root.height*3/10
                 on_press:root.finalize_answer(2)
-                background_color:"#00ff00" if root.isCorrect==2 else ( "#ff0000" if root.isCorrect>=0 else "#AAAAAA" )
+                background_color:"#00ff00" if root.is_correct==2 else ( "#ff0000" if root.is_correct>=0 else "#AAAAAA" )
                 text: "[Error]"
             Button:
                 id: fourthAnswer
@@ -734,7 +734,7 @@
                 center_x: root.width*3/4
                 center_y:root.height*3/10
                 on_press:root.finalize_answer(3)
-                background_color:"#00ff00" if root.isCorrect==3 else ( "#ff0000" if root.isCorrect>=0 else "#AAAAAA" )
+                background_color:"#00ff00" if root.is_correct==3 else ( "#ff0000" if root.is_correct>=0 else "#AAAAAA" )
                 text: "[Error]"
 
 

@@ -16,7 +16,7 @@ sm = Manager()
 
 class QuizPyApp(App):
     def build(self):
-        Window.size = (1000,1000)
+        Window.size = (1000,700)
         Window.minimum_width, Window.minimum_height = 600,700
         sm.add_widget(LoginScreen(sm, name="login"))
         sm.add_widget(RegisterScreen(sm, name="register"))
