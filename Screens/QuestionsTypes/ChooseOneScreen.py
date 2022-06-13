@@ -8,7 +8,7 @@ from kivy.clock import Clock
 
 class ChooseOneScreen(Screen):
     question = ObjectProperty(None)
-    isCorrect = NumericProperty(-1)
+    is_correct = NumericProperty(-1)
 
     def __init__(self, sm, **kw):
         super().__init__(**kw)
@@ -40,7 +40,7 @@ class ChooseOneScreen(Screen):
                     self.ids.after_answer_label.color = (1, 0, 0, 1)
                     self.sm.reset_multiply()
                 self.ids.after_answer_label.visible = True
-                self.isCorrect = self.question["correct"]
+                self.is_correct = self.question["correct"]
             self.block = True
             self.interval.cancel()
             Clock.schedule_once(self.next_question_callback, 2)
@@ -62,7 +62,7 @@ class ChooseOneScreen(Screen):
         self.question['correct'] = index
 
     def update_data(self, question):
-        self.isCorrect = -1
+        self.is_correct = -1
         self.question = question
         self.shuffle_answers()
         self.ids.main_question.text = self.question['question']

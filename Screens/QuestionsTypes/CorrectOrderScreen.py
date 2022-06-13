@@ -13,7 +13,7 @@ from kivy.clock import Clock
 class DraggableLabel(KXDraggableBehavior, Label):
     answer_option = NumericProperty(-1)
     text = StringProperty()
-    isCorrect = NumericProperty(-1)
+    is_correct = NumericProperty(-1)
 
     pass
 
@@ -35,7 +35,7 @@ class ReordableBoxLayout(KXReorderableBehavior, BoxLayout):
 
 class CorrectOrderScreen(Screen):
     question = ObjectProperty(None)
-    isCorrect = NumericProperty(-1)
+    is_correct = NumericProperty(-1)
     isFilled = BooleanProperty(False)
 
     def __init__(self, sm, **kw):
@@ -45,8 +45,8 @@ class CorrectOrderScreen(Screen):
         self.interval: Clock.time = None
         self.max_time = 30
 
-    def getIsCorrect(self):
-        return self.isCorrect
+    def getis_correct(self):
+        return self.is_correct
 
     def next_question_callback(self, dt):
         self.ids.answer_destination_fields.clear_widgets()
@@ -111,7 +111,7 @@ class CorrectOrderScreen(Screen):
         return zipped
 
     def update_data(self, question):
-        self.isCorrect = -1
+        self.is_correct = -1
         self.ids.after_answer_label.visible = False
         self.question = question
         self.ids.submit.disabled = False

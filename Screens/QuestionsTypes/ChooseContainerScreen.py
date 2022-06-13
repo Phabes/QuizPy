@@ -13,20 +13,20 @@ import asynckivy as ak
 class Container(BoxLayout):
     answer_option = NumericProperty(-1)
     text = StringProperty()
-    parentObject = ObjectProperty()
+    parent_object = ObjectProperty()
 
 
 class DraggableLabel(KXDraggableBehavior, Label):
     answer_option = NumericProperty(-1)
     text = StringProperty()
-    isCorrect = NumericProperty(-1)
+    is_correct = NumericProperty(-1)
 
     pass
 
 
 class CategoryBox(KXDroppableBehavior, BoxLayout):
     answer_option = NumericProperty(-1)
-    parentObject = ObjectProperty()
+    parent_object = ObjectProperty()
 
     def add_widget(self, widget, *args, **kwargs):
         widget.pos_hint = {'x': 0., 'y': 0.}
@@ -34,7 +34,7 @@ class CategoryBox(KXDroppableBehavior, BoxLayout):
 
     def accepts_drag(self, touch, draggable):
         if self.answer_option == draggable.answer_option:
-            self.parentObject.correct_answer_drop()
+            self.parent_object.correct_answer_drop()
             draggable.parent.remove_widget(draggable)
             self.add_widget(draggable)
             ak.start(self._dispose_item(draggable))
@@ -49,8 +49,8 @@ class CategoryBox(KXDroppableBehavior, BoxLayout):
 
 class ChooseContainerScreen(Screen):
     question = ObjectProperty(None)
-    isCorrect = NumericProperty(-1)
-    remainingAnswers = NumericProperty(-1)
+    is_correct = NumericProperty(-1)
+    remaining_answers = NumericProperty(-1)
 
     def __init__(self, sm, **kw):
         super().__init__(**kw)
@@ -69,8 +69,8 @@ class ChooseContainerScreen(Screen):
         self.sm.next_question()
 
     def correct_answer_drop(self):
-        self.remainingAnswers -= 1
-        if self.remainingAnswers == 0:
+        self.remaining_answers -= 1
+        if self.remaining_answers == 0:
             self.finalize_answer()
 
     def finalize_answer(self, *args):
@@ -105,17 +105,17 @@ class ChooseContainerScreen(Screen):
         return zipped
 
     def update_data(self, question):
-        self.isCorrect = -1
+        self.is_correct = -1
         self.ids.after_answer_label.visible = False
         self.question = question
         self.ids.main_question.text = question['question']
         shuffle(self.question['answers'])
-        self.remainingAnswers = len(self.question['answers'])
+        self.remaining_answers = len(self.question['answers'])
         self.ids.answer_destination_fields.clear_widgets()
         self.ids.answer_grid.clear_widgets()
         for i, text in enumerate(self.question['containers']):
             self.ids.answer_destination_fields.add_widget(
-                Container(answer_option=i, text=text, parentObject=self)
+                Container(answer_option=i, text=text, parent_object=self)
             )
         for answer in self.question['answers']:
             self.ids.answer_grid.add_widget(

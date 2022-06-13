@@ -1,6 +1,6 @@
 from kivy.uix.button import Button
 
-from Models.Question import BasicQuestion
+from .Question import BasicQuestion
 
 
 class ChooseOneType(BasicQuestion):
@@ -13,7 +13,7 @@ class ChooseOneType(BasicQuestion):
         for i in range(len(answers)):
             button = Button(text=answers[i], size_hint=(1, 1))
             button.fbind("on_press", self.get_correct_answer, i, fun)
-            ids.optionsGrid.add_widget(button)
+            ids.options_grid.add_widget(button)
 
     def get_correct_answer(self, index, fun, button):
         self.correct = index

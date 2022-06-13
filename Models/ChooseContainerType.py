@@ -1,6 +1,6 @@
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
-from Models.Question import ContainerQuestion
+from .Question import ContainerQuestion
 from kivy.properties import ObjectProperty
 
 
@@ -17,7 +17,7 @@ class ContainerTypeCheckboxes(BoxLayout):
 class NewContainerBox(BoxLayout):
 
     def add_answer(self):
-        if len(self.ids.answers_box.children) < 4:
+        if len(self.ids.answers_box.children) < 3:
             self.ids.answers_box.add_widget(ContainerAnswerType())
 
 

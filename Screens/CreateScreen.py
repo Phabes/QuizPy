@@ -30,58 +30,58 @@ class CreateScreen(Screen):
         self.number_of_answers = 5
 
     def save_quiz(self, button):
-        self.sm.current_screen.ids.optionsGrid.size_hint = 1, None
+        self.sm.current_screen.ids.options_grid.size_hint = 1, None
         self.quiz.set_username(connection.user)
         if connection.save_quiz(self.quiz):
             self.sm.current = "start"
 
     def cancel_creating(self):
-        self.sm.current_screen.ids.optionsGrid.cols = 2
+        self.sm.current_screen.ids.options_grid.cols = 2
         self.quiz = Quiz()
         self.question = None
         self.stage = 1
         self.sm.current = "start"
 
     def get_all_categories(self):
-        self.sm.current_screen.ids.optionsGrid.clear_widgets()
+        self.sm.current_screen.ids.options_grid.clear_widgets()
         self.sm.current_screen.ids.message_to_user.text = "Choose your category"
         categories = connection.find_categories()
         for category in categories:
-            self.sm.current_screen.ids.optionsGrid.add_widget(
+            self.sm.current_screen.ids.options_grid.add_widget(
                 CreateCategory(self.sm, self, text=category["name"]))
 
     def set_category(self, category):
         self.quiz.category = category
         self.stage = 2
-        self.sm.current_screen.ids.optionsGrid.clear_widgets()
-        self.sm.current_screen.ids.optionsGrid.size_hint = 1, 1
+        self.sm.current_screen.ids.options_grid.clear_widgets()
+        self.sm.current_screen.ids.options_grid.size_hint = 1, 1
 
         self.sm.current_screen.ids.message_to_user.text = "Write name of the quiz"
         text_input = TextInput(hint_text="Name", size_hint=(1, 1))
         self.sm.current_screen.ids["quiz_name"] = text_input
-        self.sm.current_screen.ids.optionsGrid.cols = 1
-        self.sm.current_screen.ids.optionsGrid.rows = 2
-        self.sm.current_screen.ids.optionsGrid.add_widget(text_input)
-        self.sm.current_screen.ids.optionsGrid.add_widget(
+        self.sm.current_screen.ids.options_grid.cols = 1
+        self.sm.current_screen.ids.options_grid.rows = 2
+        self.sm.current_screen.ids.options_grid.add_widget(text_input)
+        self.sm.current_screen.ids.options_grid.add_widget(
             Button(text="NEXT", size_hint=(1, 1), on_press=self.set_quiz_name))
 
     def set_quiz_name(self, button):
 
         name = self.sm.current_screen.ids.quiz_name.text
         if name != "":
-            self.sm.current_screen.ids.optionsGrid.cols = 2
-            self.sm.current_screen.ids.optionsGrid.rows = None
+            self.sm.current_screen.ids.options_grid.cols = 2
+            self.sm.current_screen.ids.options_grid.rows = None
             self.quiz.name = name
             self.choose_question_type()
 
     def choose_question_type(self, *args):
-        self.sm.current_screen.ids.optionsGrid.clear_widgets()
-        self.sm.current_screen.ids.optionsGrid.size_hint = 1, None
+        self.sm.current_screen.ids.options_grid.clear_widgets()
+        self.sm.current_screen.ids.options_grid.size_hint = 1, None
         self.sm.current_screen.ids.message_to_user.text = "Choose next question type"
         self.stage = 3
         for question_type in self.question_types:
-            # self.ids.optionsGrid.add_widget(CreateCategory(self.sm, connection, self, text=question_type))
-            self.ids.optionsGrid.add_widget(
+            # self.ids.options_grid.add_widget(CreateCategory(self.sm, connection, self, text=question_type))
+            self.ids.options_grid.add_widget(
                 Button(text=question_type, size_hint=(1, None), height=400, on_press=self.set_next_question_type))
 
     def set_next_question_type(self, button):
@@ -95,18 +95,18 @@ class CreateScreen(Screen):
         self.question.type = question_type
         self.stage = 4
         self.sm.current_screen.ids.message_to_user.text = "Write your question"
-        self.sm.current_screen.ids.optionsGrid.clear_widgets()
-        self.sm.current_screen.ids.optionsGrid.size_hint = 1, 1
+        self.sm.current_screen.ids.options_grid.clear_widgets()
+        self.sm.current_screen.ids.options_grid.size_hint = 1, 1
         text_input = TextInput(hint_text="Question", size_hint=(1, 1))
         self.sm.current_screen.ids["question_input"] = text_input
-        self.sm.current_screen.ids.optionsGrid.add_widget(text_input)
-        self.sm.current_screen.ids.optionsGrid.add_widget(
+        self.sm.current_screen.ids.options_grid.add_widget(text_input)
+        self.sm.current_screen.ids.options_grid.add_widget(
             Button(text="NEXT", size_hint=(1, 1), on_press=self.set_question))
 
     def set_question(self, button):
         question = self.sm.current_screen.ids.question_input.text
         if question != "":
-            self.sm.current_screen.ids.optionsGrid.clear_widgets()
+            self.sm.current_screen.ids.options_grid.clear_widgets()
             self.sm.current_screen.ids.message_to_user.text = "Write your answers"
             self.question.question = question
             if self.question.type == "correctOrder" or self.question.type == "chooseOne":
@@ -114,22 +114,22 @@ class CreateScreen(Screen):
 
                 for i in range(1, self.number_of_answers):
                     label = Label(text="Answer " + str(i) + " -->")
-                    self.sm.current_screen.ids.optionsGrid.add_widget(label)
+                    self.sm.current_screen.ids.options_grid.add_widget(label)
                     text_input = TextInput(hint_text="Answer " + str(i), size_hint=(1, 1))
                     self.ids["answer" + str(i)] = text_input
-                    self.sm.current_screen.ids.optionsGrid.add_widget(text_input)
-                self.sm.current_screen.ids.optionsGrid.add_widget(Label(text="Ready answers? --> "))
-                self.sm.current_screen.ids.optionsGrid.add_widget(
+                    self.sm.current_screen.ids.options_grid.add_widget(text_input)
+                self.sm.current_screen.ids.options_grid.add_widget(Label(text="Ready answers? --> "))
+                self.sm.current_screen.ids.options_grid.add_widget(
                     Button(text="NEXT", size_hint=(1, 0.2), on_press=self.set_answers_basic))
             elif self.question.type == "chooseContainer":
-                self.sm.current_screen.ids.optionsGrid.size_hint = (1, 1)
-                self.sm.current_screen.ids.optionsGrid.cols = 1
-                self.sm.current_screen.ids.optionsGrid.rows = None
+                self.sm.current_screen.ids.options_grid.size_hint = (1, 1)
+                self.sm.current_screen.ids.options_grid.cols = 1
+                self.sm.current_screen.ids.options_grid.rows = None
                 self.all_containers_box = AllContainersBox()
-                self.sm.current_screen.ids.optionsGrid.add_widget(
+                self.sm.current_screen.ids.options_grid.add_widget(
                     ContainerTypeCheckboxes(all_containers_box=self.all_containers_box))
-                self.sm.current_screen.ids.optionsGrid.add_widget(self.all_containers_box)
-                self.sm.current_screen.ids.optionsGrid.add_widget(
+                self.sm.current_screen.ids.options_grid.add_widget(self.all_containers_box)
+                self.sm.current_screen.ids.options_grid.add_widget(
                     Button(text="NEXT", size_hint=(1, 0.2), on_press=self.set_answers_container))
 
     def validate_containters_input(self, object):
@@ -172,21 +172,21 @@ class CreateScreen(Screen):
             answer = self.sm.current_screen.ids["answer" + str(i)].text
             self.question.answers.append(answer)
         self.sm.current_screen.ids.message_to_user.text = self.question.question + "\n"
-        self.sm.current_screen.ids.optionsGrid.clear_widgets()
+        self.sm.current_screen.ids.options_grid.clear_widgets()
         self.question.create_choose_correct_answer(self.sm.current_screen.ids, self.question.answers,
                                                    self.set_correct_answer)
 
     def set_correct_answer(self, correct):
         self.quiz.questions.append(self.question)
-        self.sm.current_screen.ids.optionsGrid.clear_widgets()
+        self.sm.current_screen.ids.options_grid.clear_widgets()
 
         self.generate_last_stage()
 
     def generate_last_stage(self):
         self.question = None
         self.sm.current_screen.ids.message_to_user.text = "Choose your option?"
-        self.sm.current_screen.ids.optionsGrid.cols = 2
-        self.sm.current_screen.ids.optionsGrid.add_widget(
+        self.sm.current_screen.ids.options_grid.cols = 2
+        self.sm.current_screen.ids.options_grid.add_widget(
             Button(text="ADD NEW QUESTION", size_hint=(1, 1), on_press=self.choose_question_type))
-        self.sm.current_screen.ids.optionsGrid.add_widget(
+        self.sm.current_screen.ids.options_grid.add_widget(
             Button(text="SAVE QUIZ", size_hint=(1, 1), on_press=self.save_quiz))
