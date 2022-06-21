@@ -29,10 +29,10 @@ class RankingScreen(Screen):
             RankingLabel(username="Username", score="Score", position="Position", date="Date"))
         for document in ranking:
             i += 1
-            if not hasattr(document["results"], "date"):
-                date = ""
+            if "date" in document["results"]:
+                date = document["results"]["date"].split(" ")[0]
             else:
-                date = document["results"]["date"]
+                date = ""
             self.ids.ranking_box.add_widget(
                 RankingLabel(username=document["results"]["username"],
                              score=str(document["results"]["points"]),

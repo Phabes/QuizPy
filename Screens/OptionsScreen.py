@@ -10,8 +10,9 @@ class ChooseOptionsScreen(Screen):
         self.quiz = None
 
     def check_ranking(self):
-        ranking = connection.find_k_best_results(self.sm.current_quiz["_id"], 5)
+        ranking = connection.find_k_best_results(self.quiz["_id"], 5)
         self.sm.current = "ranking"
+        self.sm.change_user_label(self.manager.get_screen("ranking").ids.user_hello)
         self.sm.current_screen.ids.back_button.funbind("on_press", self.back_ranking)
         self.sm.current_screen.ids.back_button.fbind("on_press", self.back_ranking)
         self.sm.current_screen.update_ranking(ranking, False)

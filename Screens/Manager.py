@@ -70,6 +70,7 @@ class Manager(ScreenManager):
             connection.save_score(self.current_quiz["_id"], self.points)
             ranking = connection.find_k_best_results(self.current_quiz["_id"], 5)
             self.current = "ranking"
+            self.change_user_label(self.get_screen("ranking").ids.user_hello)
             self.current_screen.ids.back_button.funbind("on_press", self.exit_quiz)
             self.current_screen.ids.back_button.fbind("on_press", self.exit_ranking)
             self.current_screen.update_ranking(ranking)
