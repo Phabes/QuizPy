@@ -840,6 +840,15 @@
                 rgba:rgba("#AAAAAA")
             Line:
                 rectangle:[*self.pos,*self.size,]
+    Label:
+        id:date_label
+        text:root.date
+        font_size:root.width/40
+        canvas.before:
+            Color:
+                rgba:rgba("#AAAAAA")
+            Line:
+                rectangle:[*self.pos,*self.size,]
           
 
 
@@ -959,6 +968,7 @@
                         text: "BACK"
                         size_hint: 0.5, 0.8
                         pos_hint: {"center_y": 0.5}
+                        on_press: root.back_category()
                     BoxLayout:
                         size_hint: 0.5, 0.8
                         pos_hint: {"center_y": 0.5}

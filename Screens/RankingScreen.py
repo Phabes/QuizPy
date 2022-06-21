@@ -8,6 +8,7 @@ class RankingLabel(BoxLayout):
     position = StringProperty()
     username = StringProperty()
     score = StringProperty()
+    date = StringProperty()
 
 
 class RankingScreen(Screen):
@@ -25,12 +26,20 @@ class RankingScreen(Screen):
         self.ids.ranking_box.clear_widgets()
         i = 0
         self.ids.ranking_box.add_widget(
-            RankingLabel(username="Username", score="Score", position="Position"))
+            RankingLabel(username="Username", score="Score", position="Position", date="Date"))
         for document in ranking:
             i += 1
+            if not hasattr(document["results"], "date"):
+                date = ""
+            else:
+                date = document["results"]["date"]
             self.ids.ranking_box.add_widget(
-                RankingLabel(username=document["results"]["username"], score=str(document["results"]["points"]),
-                             position=str(i)))
+                RankingLabel(username=document["results"]["username"],
+                             score=str(document["results"]["points"]),
+                             position=str(i),
+                             date=date
+                             )
+                )
 
     def set_user_score(self, score):
         self.user_score = score
