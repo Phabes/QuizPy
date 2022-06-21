@@ -36,6 +36,11 @@ class Manager(ScreenManager):
             self.exit_ranking("logout")
             self.current = "login"
 
+    def choose_option(self, quiz):
+        self.current = "chooseOptions"
+        self.current_screen.set_quiz(quiz)
+        self.current_quiz = quiz
+
     def start_quiz(self, quiz):
         self.current_quiz = quiz
         self.points = 0
@@ -53,10 +58,12 @@ class Manager(ScreenManager):
         self.multiply = 1
         self.current_screen.interval.cancel()
         self.current = "category"
+
     def exit_ranking(self,arg):
         self.current_question_id = -1
         self.current_quiz = None
         self.current = "category"
+
     def next_question(self):
         self.current_question_id += 1
         if self.current_question_id >= len(self.current_quiz["questions"]):

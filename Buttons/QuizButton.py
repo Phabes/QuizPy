@@ -12,4 +12,6 @@ class QuizButton(Button):
         self.sm.transition.direction = "left"
         self.sm.change_user_label(self.sm.get_screen("chooseOne").ids.user_hello)
         self.sm.change_user_label(self.sm.get_screen("correctOrder").ids.user_hello)
-        self.sm.start_quiz(self.quiz)
+        self.sm.change_user_label(self.sm.get_screen("chooseContainer").ids.user_hello)
+        self.sm.change_user_label(self.sm.get_screen("chooseOptions").ids.user_hello)
+        self.sm.choose_option(self.quiz)

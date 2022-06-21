@@ -7,6 +7,7 @@ from Screens.QuestionsTypes.CorrectOrderScreen import CorrectOrderScreen
 from Screens.QuestionsTypes.ChooseContainerScreen import ChooseContainerScreen
 from Screens.LoginScreen import LoginScreen
 from Screens.RegisterScreen import RegisterScreen
+from Screens.OptionsScreen import ChooseOptionsScreen
 from Screens.CreateScreen import CreateScreen
 from Screens.Manager import Manager
 from Screens.RankingScreen import RankingScreen
@@ -20,6 +21,7 @@ class QuizPyApp(App):
         Window.minimum_width, Window.minimum_height = 600,700
         sm.add_widget(LoginScreen(sm, name="login"))
         sm.add_widget(RegisterScreen(sm, name="register"))
+        sm.add_widget(ChooseOptionsScreen(sm, name="chooseOptions"))
         sm.add_widget(StartScreen(sm, name="start"))
         sm.add_widget(CategoryScreen(sm, name="category"))
         sm.add_widget(ChooseOneScreen(sm, name="chooseOne"))

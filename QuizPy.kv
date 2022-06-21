@@ -785,11 +785,13 @@
             size_hint:(1,.1)
             font_size:self.width/18
         BoxLayout:
+            id: your_score_label
             orientaion:"horizontal"
             size_hint:(1,.1)
             padding:[10,0]
             
             Label:
+                id: your_score_label1
                 text:"Your score: "
                 font_size:self.width/20
             Label:
@@ -936,3 +938,61 @@
                         height: 50
                         pos_hint: {"center_x": 0.5}
                         on_press: root.manager.current = "login"
+
+<ChooseOptionsScreen>
+    BoxLayout:
+        orientation:"vertical"
+        size:root.size
+        spacing:10
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: 1,None
+            height: 80
+            padding:10
+            AnchorLayout:
+                anchor_x: "left"
+                size_hint: 0.5, 1
+                BoxLayout:
+                    size_hint: 1, 1
+                    Button:
+                        id: back_button
+                        text: "BACK"
+                        size_hint: 0.5, 0.8
+                        pos_hint: {"center_y": 0.5}
+                    BoxLayout:
+                        size_hint: 0.5, 0.8
+                        pos_hint: {"center_y": 0.5}
+                        Label:
+                            id: user_hello
+                            size_hint: 1, 1
+            AnchorLayout:
+                anchor_x: "right"
+                size_hint: 0.5, 1
+                BoxLayout:
+                    orientation: "horizontal"
+                    size_hint: 0.5,1
+                    Button:
+                        text: "CREATE QUIZ"
+                        size_hint: 0.5, 0.8
+                        pos_hint: {"center_y": 0.5}
+                        on_press: root.manager.create_quiz()
+                    Button:
+                        text: "LOGOUT"
+                        size_hint: 0.5, 0.8
+                        pos_hint: {"center_y": 0.5}
+                        on_press: root.manager.logout_user()
+        BoxLayout:
+            orientation: "horizontal"
+            id: content
+            Button:
+                id: ranking_button
+                text: "CHECK RANKING"
+                size_hint: 0.5, 0.8
+                pos_hint: {"center_y": 0.5}
+                on_press: root.check_ranking()
+            Button:
+                id: start_button
+                text: "START GAME"
+                size_hint: 0.5, 0.8
+                pos_hint: {"center_y": 0.5}
+                on_press: root.start_game()

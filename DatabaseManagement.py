@@ -2,6 +2,10 @@ from ConnectionString import path
 from pymongo import MongoClient
 import bcrypt
 import json
+from datetime import datetime
+
+
+now = datetime.now()
 
 
 class Connection:
@@ -79,7 +83,8 @@ class Connection:
         return False
 
     def save_score(self, quiz_id, points):
-        new_result = {"username": self.user, "points": points}
+        date = now.strftime("%d/%m/%Y %H:%M:%S")
+        new_result = {"username": self.user, "points": points, "date": date}
         self.db.Quizes.update_one({"_id": quiz_id}, {"$push": {"results": new_result}})
 
 

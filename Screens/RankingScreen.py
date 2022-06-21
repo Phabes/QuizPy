@@ -17,7 +17,10 @@ class RankingScreen(Screen):
         super().__init__(**kw)
         self.sm = sm
 
-    def update_ranking(self, ranking):
+    def update_ranking(self, ranking, is_your_score_visible=True):
+        self.ids.your_score_label.opacity = 0 if not is_your_score_visible else 1
+        self.ids.user_score.opacity = 0 if not is_your_score_visible else 1
+        self.ids.your_score_label1.opacity = 0 if not is_your_score_visible else 1
 
         self.ids.ranking_box.clear_widgets()
         i = 0
